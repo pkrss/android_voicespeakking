@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="mainModel" type="com.pkrss.voicespeakking.model.MainModel"/>
+        <variable name="mainHandler" type="com.pkrss.voicespeakking.handler.MainHandler"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content" android:orientation="horizontal">
+            <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/edit" android:onClick="@{mainHandler.contentHandler.clickEditBtn}"/>
+        </LinearLayout>
+        -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@{mainModel.contentModel.content}"
+            android:onLongClick="@{mainHandler.contentHandler.onLongClickListenerEdit}"
+            android:textSize="9pt" />
+
+    </LinearLayout>
+</layout>

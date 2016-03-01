@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="char_fb_line">#DCDCDC</color>
+
+
+    <color name="devide_line">#CBCED2</color>
+    <color name="blue">#499BF7</color>
+    <color name="whites">#ffffff</color>
+    <color name="grays">#818181</color>
+    <color name="gray_font">#818181</color>
+    <color name="common_title">#F9F9F9</color>
+    <color name="black">#000000</color>
+    <color name="pull_refresh_textview">#000000</color>
+    <color name="gold">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="refresh_head_bg">#2B2B2B</color>
+    <color name="red">#FF0000</color>
+    <color name="backColor">#2000</color>
+    <color name="detail_bgColor">#f5f5f5</color>
+    <color name="defaultTextColor">#666</color>
+    <color name="viewfinder_frame">#2477ab</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="result_view">#b0000000</color>
+    <color name="gray">#AFAFAF</color>
+    <color name="yellow">#F99503</color>
+
+    <color name="line_green">#FFFAF0</color>
+    <color name="xingren_bai">#FFFFCD</color>
+
+    <color name="gray_light">#ffa1a1a1</color>
+
+    <color name="gray_border">#c0808080</color>
+
+    <color name="orange">#ff9900</color>
+    <color name="deepcolor">#faaa5f</color>
+    <color name="shadowcolor">#333333</color>
+    <color name="naming">#ABABAB</color>
+    <color name="background">#272727</color>
+    <color name="orange_yellow">#9b9ba0</color>
+
+    <drawable name="semi_black">#80000000</drawable>
+
+    <color name="remote_connect_text">#FFe78018</color>
+    <color name="remote_disconnect_text">#FF901821</color>
+
+    <color name="text_selected">#0079ff</color>
+    <color name="text_bg_2">#e8e8fc</color>
+    <color name="text_bg_3">#d4d4e8</color>
+
+    <color name="title_bg_color">#ff2e393d</color>
+    <color name="title_text_color">#ffffffff</color>
+    <color name="all_list_bg_color">#fff4f7f9</color>
+    <color name="all_list_devider_color">#ffdcdfe1</color>
+    <color name="all_list_scrollbar_color">#ffb1b4b5</color>
+    <color name="all_list_item_text_color">#ff000000</color>
+    <color name="toolbar_pressed_bg_color">#ff84ae28</color>
+    <color name="menu_bg_color">#ff292929</color>
+    <color name="menu_split_bg_color">#ff444343</color>
+    <color name="gray_bg">#aa000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="default_skin_text_color">#ff076818</color>
+    <color name="blue_bottom_tab_top_line1">#ffcccccc</color>
+    <color name="blue_bottom_tab_top_line2">#fff4f4f6</color>
+    <color name="text_shadow">#8824638c</color>
+    <color name="yuedong_white">#fff3f7f8</color>
+    <color name="total_tab_unselected_color">#ff808080</color>
+    <color name="textcolor_gray">#ff8a888a</color>
+    <color name="tab_start_color">#ffeeeff1</color>
+    <color name="tab_end_color">#ffe1e3e5</color>
+    <color name="setting_note_color">#fff3643e</color>
+    <color name="textcolor_black">#ff333233</color>
+    <color name="lightgrey">#ff888888</color>
+</resources>

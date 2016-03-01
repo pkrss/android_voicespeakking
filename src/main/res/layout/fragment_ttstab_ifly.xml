@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="ttsTabIFlyModel"
+            type="com.pkrss.voicespeakking.model.TTSTabIFlyModel" />
+
+        <variable
+            name="ttsTabIFlyHandler"
+            type="com.pkrss.voicespeakking.handler.TTSTabIFlyHandler" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.pkrss.voicespeakking.activity.TTSTabActivity$PlaceholderFragment"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ifly"
+            android:textSize="9pt" />
+
+        <RadioGroup android:contentDescription="@string/ifly" android:layout_width="match_parent" android:layout_height="wrap_content" android:onCheckedChangeListener="@{ttsTabIFlyHandler.ttsEnginesChanged}" android:orientation="vertical">
+            <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/local" android:text="@string/localsynthesis" android:checked="@{!ttsTabIFlyModel.online}"/>
+            <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/internet" android:text="@string/onlinesynthesis" android:checked="@{ttsTabIFlyModel.online}"/>
+        </RadioGroup>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/peoplepronunciation"
+            android:onClick="@{ttsTabIFlyHandler.clickPeoplePronunciation}"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_settings"
+            android:onClick="@{ttsTabIFlyHandler.clickSetting}" />
+
+    </LinearLayout>
+</layout>

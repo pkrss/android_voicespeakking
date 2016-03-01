@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="playerBarModel" type="com.pkrss.voicespeakking.model.PlayerBarModel"/>
+        <variable name="playerBarHandler" type="com.pkrss.voicespeakking.handler.PlayerBarHandler"/>
+    </data>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="center">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/speak"
+            android:src="@{playerBarModel.playing ? @android:drawable/ic_media_pause : @android:drawable/ic_media_play}"
+            android:onClick="@{playerBarHandler.clickPlayBtn}"
+            style="@style/footbar_item_2"
+            android:layout_margin="5dp" />
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="false"
+            android:max="@{playerBarModel.max}"
+            android:progress="@{playerBarModel.progress}"/>
+
+    </LinearLayout>
+</layout>
