@@ -1,31 +1,27 @@
-apply plugin: 'com.android.application'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+project.ext.set("pk_v4ver", "23.1.1")
+project.ext.set("pk_compileSdkVersion", 23)
+project.ext.set("pk_buildToolsVersion", "23.0.1")
+project.ext.set("pk_minSdkVersion", 14)
 
-    defaultConfig {
-        applicationId "com.pkrss.voicespeakking"
-        minSdkVersion 14
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
-
-        multiDexEnabled = true
-        multiDexKeepProguard file('../share/multi-dex-keep.txt')
-        dataBinding.enabled = true
+buildscript {
+    repositories {
+        jcenter()
     }
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), './../share/proguard-project.txt'
-        }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.5.0'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'de.greenrobot:greendao:2.1.0'
+allprojects {
+    repositories {
+        jcenter()
+//        maven { url "https://raw.githubusercontent.com/umeng/mvn-repo-umeng/master/repository" }
+    }
 }
+
+

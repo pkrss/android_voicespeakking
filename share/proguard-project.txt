@@ -1,0 +1,87 @@
+-keep class * extends java.util.ListResourceBundle {
+    protected Object[][] getContents();
+}
+
+# Keep SafeParcelable value, needed for reflection. This is required to support backwards
+# compatibility of some classes.
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Keep the names of classes/members we need for client functionality.
+-keepnames @com.google.android.gms.common.annotation.KeepName class *
+-keepclassmembernames class * {
+    @com.google.android.gms.common.annotation.KeepName *;
+}
+
+# Needed for Parcelable/SafeParcelable Creators to not get stripped
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+
+-keepclassmembers class com.pkrss.webview_core.BaseWebViewActivity {
+   public void sayHTML(java.lang.String);
+   public void shareUrl();
+}
+
+-keepattributes JavascriptInterface
+
+# umeng analytics
+-keepclassmembers class * {
+   public <init>(org.json.JSONObject);
+}
+-keep public class **.R$*{
+public static final int *;
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+# umeng feedback
+-keepclassmembers class * {
+    public <init>(org.json.JSONObject);
+}
+
+-dontwarn org.apache.http.**
+-dontwarn net.i2p.**
+-dontwarn com.umeng.fb.push.**
+
+-keep class com.umeng.message.* {
+    public <fields>;
+    public <methods>;
+}
+-keep class com.umeng.message.protobuffer.* {
+	public <fields>;
+    public <methods>;
+}
+-keep class com.umeng.message.local.* {
+    public <fields>;
+    public <methods>;
+}
+-keep class com.squareup.wire.* {
+	public <fields>;
+    public <methods>;
+}
+-keep class org.android.agoo.impl.*{
+	public <fields>;
+    public <methods>;
+}
+-keep class org.android.agoo.service.* {*;}
+-keep class org.android.spdy.**{*;}
+
+
+-dontwarn com.iflytek.speech.**
+-dontwarn com.baidu.**
+-dontwarn com.umeng.**
+-dontwarn org.android.agoo.**
+
+-keepattributes Signature
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep class com.iflytek.speech.**{*;}
+
+-dontwarn android.databinding.**
