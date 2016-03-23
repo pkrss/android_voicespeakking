@@ -16,15 +16,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.pkrss.module.TTSModule;
 import com.pkrss.voicespeakking.R;
+import com.pkrss.voicespeakking.bean.RadioItemBean;
 import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
 import com.pkrss.voicespeakking.data.SpData;
+import com.pkrss.voicespeakking.databinding.RadioGroupAdapter;
 import com.pkrss.voicespeakking.fragment.TTSTabFirstFragment;
 import com.pkrss.voicespeakking.fragment.TTSTabIFlyFragment;
 import com.pkrss.voicespeakking.handler.TTSTabHandler;
 import com.pkrss.voicespeakking.model.TTSTabModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TTSTabActivity extends AppCompatActivity {
 
@@ -120,7 +127,7 @@ public class TTSTabActivity extends AppCompatActivity {
             }
 
             if(position == 1){
-                ETTSEngineIdenty ttsEngineIdenty = SpData.getTTSEngineIdenty();
+                int ttsEngineIdenty = SpData.getTTSEngineIdenty();
 
 //                if(ttsEngineIdenty == ETTSEngineIdenty.ifly)
                     return new TTSTabIFlyFragment();

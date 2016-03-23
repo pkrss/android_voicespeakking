@@ -20,21 +20,11 @@ public final class SpData {
     }
 
     private static final String KEY_TTSEngineIdenty = "TTSEngineIdenty";
-    public static ETTSEngineIdenty getTTSEngineIdenty(){
-        int v = dataLocal.getInt(KEY_TTSEngineIdenty,0);
-        if(v == 1)
-            return ETTSEngineIdenty.pkrss;
-        if(v == 2)
-            return ETTSEngineIdenty.ifly;
-        return ETTSEngineIdenty.local;
+    public static int getTTSEngineIdenty(){
+        return dataLocal.getInt(KEY_TTSEngineIdenty, ETTSEngineIdenty.local);
     }
-    public static void setTTSEngineIdenty(ETTSEngineIdenty v){
-        int i = 0;
-        if(v == ETTSEngineIdenty.pkrss)
-            i = 1;
-        else if(v == ETTSEngineIdenty.ifly)
-            i = 2;
-        dataLocal.putInt(KEY_TTSEngineIdenty, i);
+    public static void setTTSEngineIdenty(int v){
+        dataLocal.putInt(KEY_TTSEngineIdenty, v);
     }
 
     private static final String KEY_TTSIFLYONLINE = "TTSIFlyOnline";

@@ -12,13 +12,15 @@ import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
+import com.pkrss.module.TTSModule;
 import com.pkrss.voicespeakking.R;
+import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
 import com.pkrss.voicespeakking.data.SpData;
 
 /**
  * Created by liand on 2016/2/29.
  */
-public final class TtsHelper {
+public final class TtsHelper implements TTSModule.ITtsWorker {
     // 语音合成对象
     private SpeechSynthesizer mTts;
 
@@ -125,7 +127,18 @@ public final class TtsHelper {
         }
     };
 
-    public void init(Context context) {
+    @Override
+    public int getId() {
+        return ETTSEngineIdenty.ifly;
+    }
+
+    @Override
+    public String getShowName() {
+        return "讯飞";
+    }
+
+    @Override
+    public boolean init(Context context) {
 
         this.context = context;
 
@@ -140,8 +153,16 @@ public final class TtsHelper {
         mToast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
 
         mInstaller = new  ApkInstaller(context);
+
+        return true;
     }
 
+    @Override
+    public boolean destroy() {
+        return false;
+    }
+
+    @Override
     public void play(String text){
 
         playingString = text;
@@ -170,23 +191,29 @@ public final class TtsHelper {
         }
     }
 
+    @Override
     public void stop() {
         mTts.stopSpeaking();
     }
 
+    @Override
     public void pause() {
         mTts.pauseSpeaking();
     }
 
+    @Override
     public void resume() {
         mTts.resumeSpeaking();
     }
 
+    @Override
     public boolean isSpeaking(){
         return inited && mTts.isSpeaking();
     }
 
     private String playingString;
+
+    @Override
     public String getPlayingString(){
         return playingString;
     }

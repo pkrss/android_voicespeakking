@@ -30,10 +30,10 @@
             android:text="@string/ttstab_engine_title"
             android:textSize="9pt" />
 
-        <RadioGroup android:contentDescription="@string/ttstab_engine_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:onCheckedChangeListener="@{ttsTabHandler.ttsEnginesChanged}" android:orientation="vertical">
-            <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/local" android:text="@string/local" android:checked="@{ttsTabModel.ettsEngineIdenty==ETTSEngineIdenty.local ? true:false}"/>
-            <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/pkrss" android:text="@string/pkrss" android:checked="@{ttsTabModel.ettsEngineIdenty==ETTSEngineIdenty.pkrss ? true:false}"/>
-            <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/ifly" android:text="@string/ifly" android:checked="@{ttsTabModel.ettsEngineIdenty==ETTSEngineIdenty.ifly ? true:false}"/>
+        <RadioGroup android:contentDescription="@string/ttstab_engine_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:onCheckedChangeListener="@{ttsTabHandler.ttsEnginesChanged}" android:radioGroupAdapter="@{ttsTabModel.ttsRadioGroupAdapter}" android:orientation="vertical">
+            <!--<RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/local" android:text="@string/local" android:checked="@{ttsTabModel.ettsEngineIdenty==ETTSEngineIdenty.local ? true:false}"/>-->
+            <!--<RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/pkrss" android:text="@string/pkrss" android:checked="@{ttsTabModel.ettsEngineIdenty==ETTSEngineIdenty.pkrss ? true:false}"/>-->
+            <!--<RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/ifly" android:text="@string/ifly" android:checked="@{ttsTabModel.ettsEngineIdenty==ETTSEngineIdenty.ifly ? true:false}"/>-->
         </RadioGroup>
 
     </LinearLayout>

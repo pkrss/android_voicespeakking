@@ -2,6 +2,7 @@ package com.pkrss.voicespeakking.handler;
 
 import android.view.View;
 
+import com.pkrss.module.TTSModule;
 import com.pkrss.module.ifly.TtsHelper;
 import com.pkrss.voicespeakking.model.MainModel;
 import com.pkrss.voicespeakking.model.PlayerBarModel;
@@ -17,27 +18,30 @@ public final class PlayerBarHandler {
         this.mainModel = mainModel;
     }
 
-    private TtsHelper ttsHelper;
+    private TTSModule ttsModule;
     public void clickPlayBtn(View view){
-        if(ttsHelper == null){
-            ttsHelper = new TtsHelper();
-            ttsHelper.init(view.getContext());
+        if(ttsModule == null){
+            ttsModule = TTSModule.getInstance();
 //            ttsHelper.play();
             return;
         }
 
-        String context = mainModel.getContentModel().getContent();
-        String speakingString = ttsHelper.getPlayingString();
-        if(context == speakingString || context.equals(speakingString)) {
-            if (ttsHelper.isSpeaking()) {
-                ttsHelper.pause();
+        TTSModule.ITtsWorker ttsWorker = ttsModule.getCurWorker();
+        if(ttsWorker == null)
+            return;
+
+        String content = mainModel.getContentModel().getContent();
+        String speakingString = ttsWorker.getPlayingString();
+        if(content == speakingString || content.equals(speakingString)) {
+            if (ttsWorker.isSpeaking()) {
+                ttsWorker.pause();
                 mainModel.getPlayerBarModel().setPlaying(false);
             } else {
-                ttsHelper.resume();
+                ttsWorker.resume();
                 mainModel.getPlayerBarModel().setPlaying(true);
             }
         }else{
-            ttsHelper.play(context);
+            ttsWorker.play(content);
             mainModel.getPlayerBarModel().setPlaying(true);
         }
     }
