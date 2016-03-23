@@ -1,2 +1,8 @@
 /.idea
 /gradle
+/.gradle
+/android_voicespeakking.iml
+/gradlew
+/gradlew.bat
+/local.properties
+/app/app.iml
