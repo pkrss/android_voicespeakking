@@ -3,9 +3,7 @@ package com.pkrss.voicespeakking.handler;
 import android.view.View;
 
 import com.pkrss.module.TTSModule;
-import com.pkrss.module.ifly.TtsHelper;
 import com.pkrss.voicespeakking.model.MainModel;
-import com.pkrss.voicespeakking.model.PlayerBarModel;
 
 /**
  * Created by liand on 2016/2/11.

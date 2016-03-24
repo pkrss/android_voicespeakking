@@ -1,4 +1,4 @@
-package com.pkrss.module.ifly;
+package com.pkrss.module.tts.ifly;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,7 +20,7 @@ import com.pkrss.voicespeakking.data.SpData;
 /**
  * Created by liand on 2016/2/29.
  */
-public final class TtsHelper implements TTSModule.ITtsWorker {
+public final class IflyTTSWorker implements TTSModule.ITtsWorker {
     // 语音合成对象
     private SpeechSynthesizer mTts;
 

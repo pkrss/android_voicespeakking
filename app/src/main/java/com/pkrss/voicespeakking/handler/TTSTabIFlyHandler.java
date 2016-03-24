@@ -1,22 +1,18 @@
 package com.pkrss.voicespeakking.handler;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
-import com.pkrss.module.ifly.ApkInstaller;
-import com.pkrss.module.ifly.TtsSettings;
+import com.pkrss.module.tts.ifly.ApkInstaller;
+import com.pkrss.module.tts.ifly.TtsSettings;
 import com.pkrss.voicespeakking.R;
-import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
 import com.pkrss.voicespeakking.model.TTSTabIFlyModel;
-import com.pkrss.voicespeakking.model.TTSTabModel;
 
 /**
  * Created by liand on 2016/2/11.

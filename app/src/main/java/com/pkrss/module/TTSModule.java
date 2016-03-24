@@ -2,8 +2,7 @@ package com.pkrss.module;
 
 import android.content.Context;
 
-import com.pkrss.module.ifly.TtsHelper;
-import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
+import com.pkrss.module.tts.ifly.TtsHelper;
 
 import java.util.ArrayList;
 import java.util.List;

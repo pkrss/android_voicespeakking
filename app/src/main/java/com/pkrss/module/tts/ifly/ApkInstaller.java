@@ -1,6 +1,5 @@
-package com.pkrss.module.ifly;
+package com.pkrss.module.tts.ifly;
 
-import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
