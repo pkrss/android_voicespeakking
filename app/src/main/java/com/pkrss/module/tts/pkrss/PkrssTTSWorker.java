@@ -6,6 +6,10 @@ import android.media.MediaPlayer;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.pkrss.module.TTSModule;
+import com.pkrss.module.tts.common.BaseTTS;
+import com.pkrss.voicespeakking.data.SpData;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +22,7 @@ import java.util.Map;
 /**
  * Created by liand on 2016/3/24.
  */
-public class PkrssTTSWorker {
+public class PkrssTTSWorker extends BaseTTS {
 
 //	static ProgressDialog progressDialog;
 
@@ -26,7 +30,7 @@ public class PkrssTTSWorker {
 //	static IBillingSubscribeListener mSubscribePkrssTTSListener;
 //	static TTSPurchaseCallback mBuyCallback;
 
-    private PkrssTTS self;
+    private PkrssTTSWorker self;
 
     private JSONArray mPkrssEngineList;
 
@@ -35,13 +39,13 @@ public class PkrssTTSWorker {
 //	}
 
     @Override
-    public boolean init(Context context,String engineName){
+    public boolean init(Context context){
 
-        super.init(context, engineName);
+        super.init(context);
 
         self = this;
 
-        mcurEngineName = engineName;
+        mcurEngineName = SpData.getTTSPkrssVoicer();
 
         if(mMediaPlayer==null) {
             mMediaPlayer = new MediaPlayer();
@@ -238,8 +242,9 @@ public class PkrssTTSWorker {
     }
 
     private static String _text = null;
+
     @Override
-    protected void _onDoSub(String text) {
+    protected void _child_onDoSub(String text) {
 
         if(text == null)
             return;
@@ -343,80 +348,6 @@ public class PkrssTTSWorker {
         return false;
     }
 
-
-    @Override
-    protected int getSubPos(){
-        if(isSpeaking())
-            return mMediaPlayer.getCurrentPosition();
-        return 0;
-    }
-
-//	private void _showUIBuyNoticeDialog()
-//	{
-//		AlertDialog.Builder builder = new Builder(BaseApplication.AppContext);
-//
-//		builder.setTitle(R.string.text_buy_title);
-//
-//		String msg = BaseApplication.AppContext.getString(R.string.text_buy_content);
-//
-//		builder.setMessage(msg);
-//
-//		builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//			 public void onCancel(DialogInterface dialog) {
-//			 }
-//			});
-//
-//		builder.setPositiveButton(android.R.string.ok, new OnClickListener()
-//		{
-//			public void onClick(DialogInterface dialog, int which)
-//			{
-//				dialog.dismiss();
-//
-//				 if(mBuyCallback != null)
-//					 mBuyCallback.onBuy();
-//			}
-//		});
-//
-//		builder.setNegativeButton(android.R.string.cancel, new OnClickListener()
-//		{
-//			public void onClick(DialogInterface dialog, int which)
-//			{
-//				dialog.dismiss();
-//			}
-//		});
-//		try{
-//			Dialog noticeDialog = builder.create();
-//			noticeDialog.show();
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//	}
-
-    //	public static IBillingSubscribeListener getBillingSubscribeListener(){
-//
-//		if(mSubscribePkrssTTSListener == null){
-//			mSubscribePkrssTTSListener = new IBillingSubscribeListener(){
-//
-//				@Override
-//				public void onSubscribeResult(Boolean result) {
-//					mSubscribedPkrssTTS = result;
-//					if(result){
-//						if(self != null)
-//							self._sayText();
-//					}else{
-//						BaseApplication.getHandler().post(new Runnable(){
-//				    	    public void run() {
-//				    	    	Toast.makeText(BaseApplication.AppContext, BaseApplication.AppContext.getResources().getString(R.string.text_error_unknown), Toast.LENGTH_LONG).show();
-//				    	    }
-//				    	 });
-//					}
-//				}
-//
-//			};
-//		}
-//
-//		return mSubscribePkrssTTSListener;
-//	}
     @Override
     public String getShowName() {
         return "_pkrss";

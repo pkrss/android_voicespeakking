@@ -8,6 +8,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.pkrss.module.TTSModule;
+import com.pkrss.module.tts.common.BaseTTS;
+import com.pkrss.module.tts.common.SubManyOperHelper;
+import com.pkrss.voicespeakking.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,17 +22,34 @@ import java.util.Map;
  * Created by liand on 2016/3/24.
  */
 
-public class LocalTTSWorker implements TTSModule.ITtsWorker
+public final class LocalTTSWorker extends BaseTTS {
 
-    private TextToSpeech mSpeech;
-    private Context mcontext;
-    private Boolean mInited = false;
-    private HashMap<String, String> mparams = new HashMap<String, String>();
+    private static final String LOGTAG = LocalTTSWorker.class.getSimpleName();
+
+    private TextToSpeech _speech;
+    private Context _context;
+    private Boolean _inited = false;
+    private HashMap<String, String> _tts_params;
+    private TextToSpeech.OnInitListener _ttsLisntener;
+
+    /**
+     * curreent tts engine name
+     */
+    private String _engineName;
+
+    /**
+     * current speak id
+     */
+    private int mCurPlayingUtteranceIdInt = 0;
+
+    /**
+     * current speak status
+     */
+    private String mCurPlayingUtteranceId = "";
 
     Boolean mManualSetEngineName = false;
     Boolean mCurrentTTSLangOk = false;
     int mCurrentTTSEngineIndex = 0;
-    TextToSpeech.OnInitListener mTTSLisntener;
     int mCecreateTTS = 0;
 
     @Override
@@ -40,55 +60,51 @@ public class LocalTTSWorker implements TTSModule.ITtsWorker
     @Override
     public boolean init(Context context){
 
-        mcontext = context.getApplicationContext();
+        _context = context.getApplicationContext();
 
-        return _initAfterTTSChecked();
-    }
-
-    public boolean _initAfterTTSChecked(){
         try{
-            mparams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"stringId");
+            if(_tts_params == null) {
+                _tts_params = new HashMap<String, String>();
+                _tts_params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "stringId");
+            }
 
-            mTTSLisntener = new TextToSpeech.OnInitListener() {
+            if(_ttsLisntener == null) {
+                _ttsLisntener = new TextToSpeech.OnInitListener() {
 
-                @Override
-                public void onInit(int status) {
-                    if (status == TextToSpeech.SUCCESS) {
-
-                        if(!mManualSetEngineName && !changeLang()){
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
-                                if(changeEngine())
-                                    return;
-                            }
-
-                            Toast.makeText(mcontext, mcontext.getString(R.string.error_not_found_tts_data), Toast.LENGTH_LONG).show();
-                        }else{
-                            mCurrentTTSLangOk = true;
+                    @Override
+                    public void onInit(int status) {
+                        if (status == TextToSpeech.SUCCESS) {
+                            _speakNext();
                         }
+                    }
+                };
 
-                        // only once time to call init complete event.
-//	                	if(!mInited){
+                _speech.setOnUtteranceProgressListener(new android.speech.tts.UtteranceProgressListener(){
 
-                        mInited = true;
-                        //mSpeech.setSpeechRate((float) .5);
+                    @Override
+                    public void onStart(String utteranceId) {
 
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-                            onInitStep_CompletedEvent();
-                        else
-                            onInitStep_CompletedOldEvent();
-//	                	}
-
-                        _speakNext();
                     }
 
-                    onInitStep_triggerEvent(status);
-                }
-            };
+                    @Override
+                    public void onDone(String utteranceId) {
+                        Log.d(LOGTAG, "onDone:" + utteranceId);
+                        if(mCurPlayingUtteranceId.equals(utteranceId))
+                            _speakNext();
+                    }
+
+                    @Override
+                    public void onError(String utteranceId) {
+                        Log.d(LOGTAG, "onError:" + utteranceId);
+                        onError_triggerEvent(mutteranceId);
+                    }
+
+                });
+            }
 
             recreateTTS();
 
-            _initLocalTTSLocales();
+//            _initLocalTTSLocales();
         }catch(Exception e){
             e.printStackTrace();
             return false;
@@ -99,72 +115,17 @@ public class LocalTTSWorker implements TTSModule.ITtsWorker
     private void recreateTTS(){
         releaseSpeech();
 
-        if(mcurEngineName==null || mcurEngineName.length()==0 || (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH))
-            mSpeech = new TextToSpeech(mcontext, mTTSLisntener);
-        else
-            _createEngineByName(mcurEngineName);
+        _speech = new TextToSpeech(_context, _ttsLisntener, _engineName);
     }
-
-    private void _initLocalTTSLocales(){
-        if(engineInfos == null) {
-            // init tts locale list
-            Locale[] sysLocales = Locale.getAvailableLocales();
-            Map<String, List<Locale>> locales = new HashMap<String, List<Locale>>();
-            for (Locale loc : sysLocales) {
-                String tmp = loc.getCountry();
-                if (!WebHelper.IsNullOrEmpty(loc.getLanguage()))
-                    tmp += "_" + loc.getLanguage();
-                List<Locale> a = new ArrayList<Locale>();
-                a.add(loc);
-                locales.put(tmp, a);
-            }
-            new LocalTTSHelper().loadEngines(locales, new TTSEngineInfosEventHandler() {
-
-                @Override
-                public void onCompleted(List<TTSEngineInfo> engineInfos) {
-                    LocalTTS.this.engineInfos = engineInfos;
-                    _init_locale_and_engine_cb();
-                }
-
-            });
-        }else{
-            _init_locale_and_engine_cb();
-        }
-    }
-
-    String mcurEngineName;
-
-    private static int mCurPlayingUtteranceIdInt = 0;
-    private static String mCurPlayingUtteranceId = "";
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
     private void onInitStep_CompletedEvent(){
-        mSpeech.setOnUtteranceProgressListener(new android.speech.tts.UtteranceProgressListener(){
 
-            @Override
-            public void onStart(String utteranceId) {
-
-            }
-
-            @Override
-            public void onDone(String utteranceId) {
-                Log.d(LOGTAG, "onDone:" + utteranceId);
-                if(mCurPlayingUtteranceId.equals(utteranceId))
-                    _speakNext();
-            }
-
-            @Override
-            public void onError(String utteranceId) {
-                Log.d(LOGTAG, "onError:" + utteranceId);
-                onError_triggerEvent(mutteranceId);
-            }
-
-        });
     }
 
     @SuppressWarnings("deprecation")
     private void onInitStep_CompletedOldEvent(){
-        mSpeech.setOnUtteranceCompletedListener(new TextToSpeech.OnUtteranceCompletedListener(){
+        _speech.setOnUtteranceCompletedListener(new TextToSpeech.OnUtteranceCompletedListener(){
 
             @Override
             public void onUtteranceCompleted(String arg0) {
@@ -178,38 +139,36 @@ public class LocalTTSWorker implements TTSModule.ITtsWorker
     @Override
     public boolean destroy(){
 
-        mInited = false;
-
         releaseSpeech();
 
         return true;
     }
 
     private void releaseSpeech(){
-        if (mSpeech != null) {
-            mSpeech.stop();
-            mSpeech.shutdown();
-            mSpeech = null;
+        if (_speech != null) {
+            _speech.stop();
+            _speech.shutdown();
+            _speech = null;
         }
     }
 
 
     @Override
     public void stop() {
-        if(mSpeech == null)
+        if(_speech == null)
             return;
 
         mCurPlayingUtteranceId = "EOF";
-        if(mSpeech.isSpeaking())
-            mSpeech.stop();
+        if(_speech.isSpeaking())
+            _speech.stop();
     }
 
     protected void _onDoSub(String text) {
         mCurPlayingUtteranceId = "" + (mCurPlayingUtteranceIdInt++);
-        mparams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, mCurPlayingUtteranceId);
-        if(mSpeech!=null)
+        _tts_params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, mCurPlayingUtteranceId);
+        if(_speech!=null)
 
-            if(TextToSpeech.ERROR == mSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, mparams)){
+            if(TextToSpeech.ERROR == _speech.speak(text, TextToSpeech.QUEUE_FLUSH, _tts_params)){
                 if(++mCecreateTTS < 3)
                     recreateTTS();
             }
@@ -217,9 +176,9 @@ public class LocalTTSWorker implements TTSModule.ITtsWorker
     @Override
     public boolean isSpeaking(){
 
-        if(mSpeech == null)
+        if(_speech == null)
             return false;
-        return mSpeech.isSpeaking();
+        return _speech.isSpeaking();
     }
 
 }

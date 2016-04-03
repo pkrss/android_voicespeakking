@@ -50,4 +50,12 @@ public final class SpData {
     public static void setTTSPkrssId(String v){
         dataLocal.putString(KEY_TTSPKRSSID, v);
     }
+
+    private static final String KEY_TTS_PKSS_Voicer = "TTSPkrssVoicer";
+    public static String getTTSPkrssVoicer(){
+        return dataLocal.getString(KEY_TTS_PKSS_Voicer, null);
+    }
+    public static void setTTSPkrssVoicer(String v){
+        dataLocal.putString(KEY_TTS_PKSS_Voicer, v);
+    }
 }

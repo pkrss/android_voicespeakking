@@ -13,6 +13,18 @@ public final class PlayerBarModel extends BaseObservable {
     private int progress;
     private int max;
 
+    private PlayerBarModel(){
+
+    }
+
+    private static PlayerBarModel instance;
+
+    public static PlayerBarModel getInstance() {
+        if(instance == null)
+            instance = new PlayerBarModel();
+        return instance;
+    }
+
     @Bindable
     public boolean isPlaying() {
         return playing;

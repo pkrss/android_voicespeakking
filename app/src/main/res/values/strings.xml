@@ -21,4 +21,6 @@
     <string name="edit">Edit</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+
+    <string name="error_not_found_tts_data">Not found voice data in your system</string>
 </resources>

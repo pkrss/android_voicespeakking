@@ -18,12 +18,8 @@ public final class MainModel extends BaseObservable {
         this.viewPager = viewPager;
     }
 
-    private PlayerBarModel playerBarModel;
-
     public PlayerBarModel getPlayerBarModel() {
-        if(playerBarModel == null)
-            playerBarModel = new PlayerBarModel();
-        return playerBarModel;
+        return PlayerBarModel.getInstance();
     }
     private ContentModel contentModel;
 

@@ -1,8 +1,12 @@
 package com.pkrss.module;
 
+import android.app.Service;
 import android.content.Context;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 
-import com.pkrss.module.tts.ifly.TtsHelper;
+import com.pkrss.module.tts.ifly.IflyTTSWorker;
+import com.pkrss.voicespeakking.model.PlayerBarModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,20 +32,58 @@ public final class TTSModule {
          */
         String getShowName();
 
+        /**
+         *  iniitalize when want to prepare speak.
+         *  call destroy,will match this init();
+         * @param context
+         * @return
+         */
         boolean init(Context context);
 
+        /**
+         * destroy tts engine
+         * @return
+         */
         boolean destroy();
 
+        /**
+         * is tts speaking
+         * @return
+         */
         boolean isSpeaking();
 
+        /**
+         * get playing string
+         * @return
+         */
         String getPlayingString();
 
+        /**
+         * pause speak
+         */
         void pause();
 
+        /**
+         * resume speak
+         */
         void resume();
 
+        /**
+         * play string
+         * @param content
+         */
         void play(String content);
 
+        /**
+         * 不实现此函数 用play实现
+         * @param pos
+         * @return
+         */
+//        boolean setCurSpeakPos(int pos);
+
+        /**
+         * not call
+         */
         void stop();
     }
 
@@ -57,13 +99,50 @@ public final class TTSModule {
         return instance;
     }
 
+    private TelephonyManager _tm = null;
+
     public boolean init(Context context){
-        curWorker = new TtsHelper();
+
+        try{
+            _tm = (TelephonyManager)context.getSystemService(Service.TELEPHONY_SERVICE);
+            if(_tm!=null)
+                _tm.listen(_tm_listener, PhoneStateListener.LISTEN_CALL_STATE);
+
+            StatAnalytics.log(this.getClass().getName() + " init");
+
+        }catch(Exception e){
+
+        }
+
+        curWorker = new IflyTTSWorker();
 
         ttsWorkerList.add(curWorker);
 
         return curWorker.init(context);
     }
+
+
+
+    private PhoneStateListener _tm_listener = new PhoneStateListener(){
+
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+
+            super.onCallStateChanged(state, incomingNumber);
+
+            switch(state){
+                case TelephonyManager.CALL_STATE_IDLE:
+                    _resumeTTSByCall();
+                    break;
+                case TelephonyManager.CALL_STATE_OFFHOOK:
+                    _pauseTTSByCall();
+                    break;
+                case TelephonyManager.CALL_STATE_RINGING:
+                    _pauseTTSByCall();
+                    break;
+            }
+        }
+    };
 
     public ITtsWorker getCurWorker() {
         return curWorker;
@@ -71,5 +150,29 @@ public final class TTSModule {
 
     public List<ITtsWorker> getTtsWorkerList() {
         return ttsWorkerList;
+    }
+
+    /**
+     * call by tts
+     * @param pos
+     */
+    public static void onProgress_triggerEvent(int pos){
+        PlayerBarModel.getInstance().setProgress(pos);
+    }
+
+    /**
+     * call by tts
+     * @param utteranceId
+     */
+    public static void onCompleted_triggerEvent(String utteranceId){
+        PlayerBarModel.getInstance().setPlaying(false);
+    }
+
+    /**
+     * call by tts
+     * @param utteranceId
+     */
+    public static void onError_triggerEvent(String utteranceId){
+        PlayerBarModel.getInstance().setPlaying(false);
     }
 }
