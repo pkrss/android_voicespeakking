@@ -6,8 +6,10 @@ import android.media.MediaPlayer;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.pkrss.common.helper.WebHelper;
 import com.pkrss.module.TTSModule;
 import com.pkrss.module.tts.common.BaseTTS;
+import com.pkrss.module.tts.pkrss.dao.RemoteCacheDao;
 import com.pkrss.voicespeakking.data.SpData;
 
 import org.json.JSONArray;
@@ -84,19 +86,19 @@ public class PkrssTTSWorker extends BaseTTS {
 
         if(mPkrssEngineList==null)
             initTTS();
-        else{
-            BaseApplication.getHandler().postDelayed(new Runnable() {
-                public void run() {
-                    _init_locale_and_engine_cb();
-                }
-            }, 2000);
-        }
+//        else{
+//            BaseApplication.getHandler().postDelayed(new Runnable() {
+//                public void run() {
+//                    _init_locale_and_engine_cb();
+//                }
+//            }, 2000);
+//        }
 
         return true;
     }
 
     private void initTTS(){
-        RemoteCacheDataHelper.getTTSList(new IRemoteCacheDataListener() {
+        RemoteCacheDataHelper.getTTSList(new RemoteCacheDao.IRemoteCacheDataListener() {
 
             @Override
             public void onResult(String content) {

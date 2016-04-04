@@ -1,31 +1,36 @@
 package com.pkrss.module.tts.pkrss.dao;
 
-import java.text.DateFormat;
+import com.pkrss.common.helper.WebHelper;
+import com.pkrss.voicespeakking.db.dao.RemoteCacheDataDao;
+import com.pkrss.voicespeakking.db.model.RemoteCacheData;
+import com.pkrss.voicespeakking.db.util.DbCore;
+
 import java.util.Calendar;
 import java.util.Date;
-
-import com.pkrss.data.bean.RemoteCacheData;
-import com.pkrss.core.WebHelper;
-import com.pkrss.i.IRemoteCacheDataListener;
-import com.pkrss.tts.pkrss.PkrssTTS;
-import com.pkrss.data.BaseUserData;
+import java.util.List;
 
 public final class RemoteCacheDao {
+
 	public interface IRemoteCacheDataListener{
 		void onResult(String content);
 	}
-
 
 	public static void getTTSList(String url,IRemoteCacheDataListener listener){
 		getRemoteOrCacheDataAsync(listener, url,3); // PkrssTTS.getBaseurl() +  "?task=getTTSList"
 	}
 	
 	private static void getRemoteOrCacheDataAsync(IRemoteCacheDataListener listener,String url,int days){
-		RemoteCacheData remoteCacheData = BaseUserData.BaseInstance().getRemoteCacheData(url);
+
+		RemoteCacheData remoteCacheData = null;
+
+		RemoteCacheDataDao remoteCacheDataDao = DbCore.getDaoSession().getRemoteCacheDataDao();
+		List<RemoteCacheData> remoteCacheDataList = remoteCacheDataDao.queryBuilder().where(RemoteCacheDataDao.Properties.Url.eq(url)).list();
+		if(remoteCacheDataList!=null && remoteCacheDataList.size()>0)
+			remoteCacheData = remoteCacheDataList.get(0);
 
 		if(remoteCacheData != null){
 			if(listener != null){
-				listener.onResult(remoteCacheData.content);
+				listener.onResult(remoteCacheData.getContent());
 				listener = null;
 			}
 		}
@@ -45,45 +50,51 @@ public final class RemoteCacheDao {
 	
 	private static void getRemoteOrCacheData(IRemoteCacheDataListener listener,String url,int days){
 
+		RemoteCacheData remoteCacheData = null;
+
+		RemoteCacheDataDao remoteCacheDataDao = DbCore.getDaoSession().getRemoteCacheDataDao();
+		List<RemoteCacheData> remoteCacheDataList = remoteCacheDataDao.queryBuilder().where(RemoteCacheDataDao.Properties.Url.eq(url)).list();
+		if(remoteCacheDataList!=null && remoteCacheDataList.size()>0)
+			remoteCacheData = remoteCacheDataList.get(0);
+
 		String ret = null;
-		RemoteCacheData remoteCacheData = BaseUserData.BaseInstance().getRemoteCacheData(url);
-		String curTime = BaseUserData.getCurTime();
 		if(remoteCacheData != null){
-			ret = remoteCacheData.content;
+			ret = remoteCacheData.getContent();
 			
 			try{
-				Date curDate = DateFormat.getDateTimeInstance().parse(curTime);
-				Date oldDate = DateFormat.getDateTimeInstance().parse(remoteCacheData.createTime);
+				Date curDate = new Date();
+				Date oldDate = remoteCacheData.getCreateTime();
 				
 				Calendar curCalendar=Calendar.getInstance();
 				Calendar oldCalendar=Calendar.getInstance();
 				curCalendar.setTime(curDate);
 				oldCalendar.setTime(oldDate);
 				
-				oldCalendar.add(Calendar.DAY_OF_MONTH,days);
+				oldCalendar.add(Calendar.DATE, days);
 				
 				if(oldCalendar.compareTo(curCalendar)<0){
-					remoteCacheData.content = null;
+					remoteCacheData.setContent(null);
 				}
 			}catch(Exception e){
-				remoteCacheData.content = null;
+				remoteCacheData.setContent(null);
 			}
 		}
-		if((remoteCacheData == null) || (remoteCacheData.content == null)){
+		if((remoteCacheData == null) || (remoteCacheData.getContent() == null)){
 			ret = WebHelper.GetPageContent(url);
 			
-			if(!WebHelper.IsNullOrEmpty(ret)){
+			if(ret!=null && ret.length()>0){
 				if(remoteCacheData == null){
 					remoteCacheData = new RemoteCacheData();
-					remoteCacheData.url = url;
+					remoteCacheData.setUrl(url);
 				}
-				remoteCacheData.content = ret;
-				remoteCacheData.createTime = curTime;
-				BaseUserData.BaseInstance().setRemoteCacheData(remoteCacheData);				
+				remoteCacheData.setContent(ret);
+				remoteCacheData.setCreateTime(new Date());
+
+				remoteCacheDataDao.insertOrReplace(remoteCacheData);
 			}
 		}
-		
-		if(listener != null)
+
+		if (listener != null)
 			listener.onResult(ret);
 	}
 }

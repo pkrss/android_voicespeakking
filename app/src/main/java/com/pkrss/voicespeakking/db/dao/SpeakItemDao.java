@@ -31,6 +31,8 @@ public class SpeakItemDao extends AbstractDao<SpeakItem, Long> {
         public final static Property UpdateTime = new Property(5, java.util.Date.class, "updateTime", false, "UPDATE_TIME");
     };
 
+    private DaoSession daoSession;
+
 
     public SpeakItemDao(DaoConfig config) {
         super(config);
@@ -38,6 +40,7 @@ public class SpeakItemDao extends AbstractDao<SpeakItem, Long> {
     
     public SpeakItemDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -92,6 +95,12 @@ public class SpeakItemDao extends AbstractDao<SpeakItem, Long> {
         if (updateTime != null) {
             stmt.bindLong(6, updateTime.getTime());
         }
+    }
+
+    @Override
+    protected void attachEntity(SpeakItem entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
 
     /** @inheritdoc */

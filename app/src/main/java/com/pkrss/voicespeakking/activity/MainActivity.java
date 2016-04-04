@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.pkrss.common.base.AppVar;
 import com.pkrss.module.TTSModule;
 import com.pkrss.voicespeakking.R;
 import com.pkrss.voicespeakking.activity.TTSTabActivity;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        AppVar.setAppContext(this.getApplicationContext());
         SpData.init(this);
         TTSModule.getInstance().init(this);
 

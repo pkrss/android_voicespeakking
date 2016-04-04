@@ -1,0 +1,2 @@
+
+Android ORM系列之GreenDao最佳实践: http://www.androidchina.net/3472.html
