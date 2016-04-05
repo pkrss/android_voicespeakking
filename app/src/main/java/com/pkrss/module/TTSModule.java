@@ -2,6 +2,7 @@ package com.pkrss.module;
 
 import android.app.Service;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
@@ -87,6 +88,12 @@ public final class TTSModule {
          * not call
          */
         void stop();
+
+        /**
+         * get option fragment
+         * @return
+         */
+        Fragment createOptionFragment();
     }
 
     private Context _context;

@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,6 +13,8 @@ import com.pkrss.module.tts.common.BaseTTS;
 import com.pkrss.module.tts.common.SubManyOperHelper;
 import com.pkrss.voicespeakking.R;
 import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
+import com.pkrss.voicespeakking.fragment.TTSTabIFlyFragment;
+import com.pkrss.voicespeakking.fragment.TTSTabLocalFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -205,5 +208,8 @@ public final class LocalTTSWorker extends BaseTTS {
 
         _speakNext();
     }
-
+    @Override
+    public Fragment createOptionFragment(){
+        return new TTSTabLocalFragment();
+    }
 }

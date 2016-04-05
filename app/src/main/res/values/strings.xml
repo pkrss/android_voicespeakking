@@ -21,7 +21,9 @@
     <string name="edit">Edit</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="option">Option</string>
 
+    <string name="language">Language</string>
 
     <string name="text_downloading">Downloading</string>
     <string name="text_getdownloadlink">Getting download link</string>

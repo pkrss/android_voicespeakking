@@ -129,8 +129,7 @@ public class TTSTabActivity extends AppCompatActivity {
             if(position == 1){
                 int ttsEngineIdenty = SpData.getTTSEngineIdenty();
 
-//                if(ttsEngineIdenty == ETTSEngineIdenty.ifly)
-                    return new TTSTabIFlyFragment();
+                return TTSModule.getInstance().getCurWorker().createOptionFragment();
             }
 
             return null;

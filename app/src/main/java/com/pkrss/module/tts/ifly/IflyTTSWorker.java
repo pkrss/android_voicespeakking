@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.iflytek.cloud.ErrorCode;
@@ -16,6 +17,7 @@ import com.pkrss.module.TTSModule;
 import com.pkrss.voicespeakking.R;
 import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
 import com.pkrss.voicespeakking.data.SpData;
+import com.pkrss.voicespeakking.fragment.TTSTabIFlyFragment;
 
 /**
  * Created by liand on 2016/2/29.
@@ -256,5 +258,10 @@ public final class IflyTTSWorker implements TTSModule.ITtsWorker {
     private void showTip(final String str) {
         mToast.setText(str);
         mToast.show();
+    }
+
+    @Override
+    public Fragment createOptionFragment(){
+        return new TTSTabIFlyFragment();
     }
 }
