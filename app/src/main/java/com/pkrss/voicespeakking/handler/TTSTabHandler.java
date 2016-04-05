@@ -22,13 +22,7 @@ public final class TTSTabHandler {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-            if(checkedId == R.id.local){
-                ttsTabModel.setEttsEngineIdenty(ETTSEngineIdenty.local);
-            }else if(checkedId == R.id.pkrss){
-                ttsTabModel.setEttsEngineIdenty(ETTSEngineIdenty.pkrss);
-            }else if(checkedId == R.id.ifly){
-                ttsTabModel.setEttsEngineIdenty(ETTSEngineIdenty.ifly);
-            }
+            ttsTabModel.setEttsEngineIdenty(checkedId);
 
             ttsTabModel.getViewPager().setCurrentItem(1, true);
         }

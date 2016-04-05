@@ -90,4 +90,9 @@ public abstract class BaseTTS implements TTSModule.ITtsWorker {
 
         return true;
     }
+
+    @Override
+    public String getPlayingString() {
+        return _subManyOperHelper.getText();
+    }
 }

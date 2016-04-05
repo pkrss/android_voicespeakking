@@ -3,28 +3,25 @@ package com.pkrss.module.tts.pkrss;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.pkrss.common.base.AppVar;
 import com.pkrss.common.helper.WebHelper;
-import com.pkrss.module.TTSModule;
 import com.pkrss.module.tts.common.BaseTTS;
-import com.pkrss.module.tts.pkrss.dao.RemoteCacheDao;
+import com.pkrss.voicespeakking.R;
+import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
 import com.pkrss.voicespeakking.data.SpData;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
  * Created by liand on 2016/3/24.
  */
-public class PkrssTTSWorker extends BaseTTS {
+public final class PkrssTTSWorker extends BaseTTS {
 
 //	static ProgressDialog progressDialog;
 
@@ -84,8 +81,8 @@ public class PkrssTTSWorker extends BaseTTS {
             //		});
         }
 
-        if(mPkrssEngineList==null)
-            initTTS();
+//        if(mPkrssEngineList==null)
+//            initTTSList();
 //        else{
 //            BaseApplication.getHandler().postDelayed(new Runnable() {
 //                public void run() {
@@ -97,120 +94,120 @@ public class PkrssTTSWorker extends BaseTTS {
         return true;
     }
 
-    private void initTTS(){
-        RemoteCacheDataHelper.getTTSList(new RemoteCacheDao.IRemoteCacheDataListener() {
+//    private void initTTSList(){
+//        RemoteCacheDao.getTTSList(new RemoteCacheDao.IRemoteCacheDataListener() {
+//
+//            @Override
+//            public void onResult(String content) {
+//
+//                do {
+//                    if (WebHelper.IsNullOrEmpty(content))
+//                        break;
+//
+//                    try {
+//                        mPkrssEngineList = new JSONArray(content);
+//
+//                        engineInfos = new ArrayList<TTSEngineInfo>();
+//
+//                        String country2,language;
+//                        int pos;
+//
+//                        JSONObject obj,obj2;
+//                        JSONArray ary;
+//
+//                        for(int i=0,c=mPkrssEngineList.length();i<c;++i) {
+//
+//                            obj = mPkrssEngineList.optJSONObject(i);
+//                            if (obj == null)
+//                                continue;
+//
+//                            language = obj.optString("locale");
+//                            if (language == null)
+//                                continue;
+//
+//                            country2 = "";
+//                            pos = language.replace('-', '_').indexOf('_');
+//                            if(pos > 0){
+//                                country2 = language.substring(pos+1);
+//                                language = language.substring(0,pos);
+//                            }
+//
+//                            ary = obj.optJSONArray("tts");
+//                            if( ary != null){
+//                                for(int i2=0,c2=ary.length();i2<c2;++i2){
+//                                    obj2 = ary.optJSONObject(i2);
+//                                    if(obj2 == null)
+//                                        continue;
+//
+//                                    String id = obj2.optString("id");
+//                                    if(id == null)
+//                                        continue;
+//                                    String name = obj2.optString("name");
+//                                    if(name == null)
+//                                        continue;
+//
+//                                    TTSEngineInfo ttsEngineInfo = new TTSEngineInfo(id,name,language,new Locale(language, country2));
+//                                    engineInfos.add(ttsEngineInfo);
+//                                }
+//                            }
+//                        }
+//
+//                    } catch (JSONException e) {
+//                        // TODO Auto-generated catch block
+//                        e.printStackTrace();
+//                    }
+//                } while (false);
+//
+//                BaseApplication.getHandler().postDelayed(new Runnable() {
+//                    public void run() {
+//                        _init_locale_and_engine_cb();
+//                    }
+//                },2000);
+//            }
+//
+//        });
+//    }
 
-            @Override
-            public void onResult(String content) {
-
-                do {
-                    if (WebHelper.IsNullOrEmpty(content))
-                        break;
-
-                    try {
-                        mPkrssEngineList = new JSONArray(content);
-
-                        engineInfos = new ArrayList<TTSEngineInfo>();
-
-                        String country2,language;
-                        int pos;
-
-                        JSONObject obj,obj2;
-                        JSONArray ary;
-
-                        for(int i=0,c=mPkrssEngineList.length();i<c;++i) {
-
-                            obj = mPkrssEngineList.optJSONObject(i);
-                            if (obj == null)
-                                continue;
-
-                            language = obj.optString("locale");
-                            if (language == null)
-                                continue;
-
-                            country2 = "";
-                            pos = language.replace('-', '_').indexOf('_');
-                            if(pos > 0){
-                                country2 = language.substring(pos+1);
-                                language = language.substring(0,pos);
-                            }
-
-                            ary = obj.optJSONArray("tts");
-                            if( ary != null){
-                                for(int i2=0,c2=ary.length();i2<c2;++i2){
-                                    obj2 = ary.optJSONObject(i2);
-                                    if(obj2 == null)
-                                        continue;
-
-                                    String id = obj2.optString("id");
-                                    if(id == null)
-                                        continue;
-                                    String name = obj2.optString("name");
-                                    if(name == null)
-                                        continue;
-
-                                    TTSEngineInfo ttsEngineInfo = new TTSEngineInfo(id,name,language,new Locale(language, country2));
-                                    engineInfos.add(ttsEngineInfo);
-                                }
-                            }
-                        }
-
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                } while (false);
-
-                BaseApplication.getHandler().postDelayed(new Runnable() {
-                    public void run() {
-                        _init_locale_and_engine_cb();
-                    }
-                },2000);
-            }
-
-        });
-    }
-
-    private void _init_locale_and_engine_cb(){
-        // wait for local engine to first loaded.
-
-        ArrayAdapter<Object> enginesLocalAdapterList =  TTSModule.getInstance().getEnginesLocalesAdapterList();
-        if(enginesLocalAdapterList == null)
-            return;
-
-        do{
-            if(mPkrssEngineList == null)
-                break;
-
-            String country2,language;
-            int pos;
-
-            JSONObject obj;
-
-            for(int i=0,c=mPkrssEngineList.length();i<c;++i){
-
-                obj = mPkrssEngineList.optJSONObject(i);
-                if(obj == null)
-                    continue;
-
-                country2 = obj.optString("locale");
-                if(country2 == null)
-                    continue;
-
-                language = "";
-                pos = country2.replace('-', '_').indexOf('_');
-                if(pos > 0){
-                    language = country2.substring(pos+1);
-                    country2 = country2.substring(0,pos);
-                }
-
-                TTSModule.getInstance().addEnginesLocalAdapterList(new Locale(country2, language));
-            }
-
-        }while(false);
-
-        TTSModule.getInstance().sortEnginesLocaleAndRefreshEngines();
-    }
+//    private void _init_locale_and_engine_cb(){
+//        // wait for local engine to first loaded.
+//
+//        ArrayAdapter<Object> enginesLocalAdapterList =  TTSModule.getInstance().getEnginesLocalesAdapterList();
+//        if(enginesLocalAdapterList == null)
+//            return;
+//
+//        do{
+//            if(mPkrssEngineList == null)
+//                break;
+//
+//            String country2,language;
+//            int pos;
+//
+//            JSONObject obj;
+//
+//            for(int i=0,c=mPkrssEngineList.length();i<c;++i){
+//
+//                obj = mPkrssEngineList.optJSONObject(i);
+//                if(obj == null)
+//                    continue;
+//
+//                country2 = obj.optString("locale");
+//                if(country2 == null)
+//                    continue;
+//
+//                language = "";
+//                pos = country2.replace('-', '_').indexOf('_');
+//                if(pos > 0){
+//                    language = country2.substring(pos+1);
+//                    country2 = country2.substring(0,pos);
+//                }
+//
+//                TTSModule.getInstance().addEnginesLocalAdapterList(new Locale(country2, language));
+//            }
+//
+//        }while(false);
+//
+//        TTSModule.getInstance().sortEnginesLocaleAndRefreshEngines();
+//    }
 
     @Override
     public boolean destroy() {
@@ -263,6 +260,13 @@ public class PkrssTTSWorker extends BaseTTS {
         t.start();
     }
 
+    @Override
+    protected void _child_onDoStop() {
+        if(mMediaPlayer == null)
+            return;
+        mMediaPlayer.stop();
+    }
+
 
     private void _sayTextThread(String text){
         if(text == null || text.length()==0)
@@ -273,9 +277,9 @@ public class PkrssTTSWorker extends BaseTTS {
         param.put("tts", mcurEngineName);
         param.put("text", text);
 
-        BaseApplication.getHandler().post(new Runnable() {
+        AppVar.getHandler().post(new Runnable() {
             public void run() {
-                Toast.makeText(BaseApplication.AppContext, BaseApplication.AppContext.getResources().getString(R.string.text_getdownloadlink), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AppVar.getAppContext(), AppVar.getAppContext().getResources().getString(R.string.text_getdownloadlink), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -315,9 +319,9 @@ public class PkrssTTSWorker extends BaseTTS {
 //
 //					});
 
-                    BaseApplication.getHandler().post(new Runnable() {
+                    AppVar.getHandler().post(new Runnable() {
                         public void run() {
-                            Toast.makeText(BaseApplication.AppContext, BaseApplication.AppContext.getResources().getString(R.string.text_downloading), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AppVar.getAppContext(), AppVar.getAppContext().getResources().getString(R.string.text_downloading), Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -336,18 +340,37 @@ public class PkrssTTSWorker extends BaseTTS {
         return (mMediaPlayer != null) && mMediaPlayer.isPlaying();
     }
 
+    @Override
+    public void pause() {
+        if(mMediaPlayer==null)
+            return;
+        mMediaPlayer.pause();
+    }
+
+    @Override
+    public void resume() {
+        if(mMediaPlayer==null)
+            return;
+        mMediaPlayer.start();
+    }
+
     static String mcurEngineName;
 
     private static MediaPlayer mMediaPlayer;
 
+//    @Override
+//    public Boolean changeEngineByName(String engineName){
+//
+//        if(!WebHelper.IsNullOrEmpty(mcurEngineName) && engineName.equals(mcurEngineName))
+//            return true;
+//
+//        mcurEngineName = engineName;
+//        return false;
+//    }
+
     @Override
-    public Boolean changeEngineByName(String engineName){
-
-        if(!WebHelper.IsNullOrEmpty(mcurEngineName) && engineName.equals(mcurEngineName))
-            return true;
-
-        mcurEngineName = engineName;
-        return false;
+    public int getId() {
+        return ETTSEngineIdenty.pkrss;
     }
 
     @Override

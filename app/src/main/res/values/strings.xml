@@ -22,5 +22,9 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
 
+
+    <string name="text_downloading">Downloading</string>
+    <string name="text_getdownloadlink">Getting download link</string>
+
     <string name="error_not_found_tts_data">Not found voice data in your system</string>
 </resources>

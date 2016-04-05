@@ -11,6 +11,7 @@ import com.pkrss.module.TTSModule;
 import com.pkrss.module.tts.common.BaseTTS;
 import com.pkrss.module.tts.common.SubManyOperHelper;
 import com.pkrss.voicespeakking.R;
+import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +52,11 @@ public final class LocalTTSWorker extends BaseTTS {
     Boolean mCurrentTTSLangOk = false;
     int mCurrentTTSEngineIndex = 0;
     int mCecreateTTS = 0;
+
+    @Override
+    public int getId() {
+        return ETTSEngineIdenty.local;
+    }
 
     @Override
     public String getShowName(){
@@ -96,7 +102,8 @@ public final class LocalTTSWorker extends BaseTTS {
                     @Override
                     public void onError(String utteranceId) {
                         Log.d(LOGTAG, "onError:" + utteranceId);
-                        onError_triggerEvent(mutteranceId);
+                        stop();
+//                        onError_triggerEvent(mutteranceId);
                     }
 
                 });
@@ -125,11 +132,11 @@ public final class LocalTTSWorker extends BaseTTS {
 
     @SuppressWarnings("deprecation")
     private void onInitStep_CompletedOldEvent(){
-        _speech.setOnUtteranceCompletedListener(new TextToSpeech.OnUtteranceCompletedListener(){
+        _speech.setOnUtteranceCompletedListener(new TextToSpeech.OnUtteranceCompletedListener() {
 
             @Override
             public void onUtteranceCompleted(String arg0) {
-                if(mCurPlayingUtteranceId.equals(arg0))
+                if (mCurPlayingUtteranceId.equals(arg0))
                     _speakNext();
             }
 
@@ -154,16 +161,7 @@ public final class LocalTTSWorker extends BaseTTS {
 
 
     @Override
-    public void stop() {
-        if(_speech == null)
-            return;
-
-        mCurPlayingUtteranceId = "EOF";
-        if(_speech.isSpeaking())
-            _speech.stop();
-    }
-
-    protected void _onDoSub(String text) {
+    protected void _child_onDoSub(String text) {
         mCurPlayingUtteranceId = "" + (mCurPlayingUtteranceIdInt++);
         _tts_params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, mCurPlayingUtteranceId);
         if(_speech!=null)
@@ -173,12 +171,39 @@ public final class LocalTTSWorker extends BaseTTS {
                     recreateTTS();
             }
     }
+
+    @Override
+    protected void _child_onDoStop() {
+        if(_speech == null)
+            return;
+
+        mCurPlayingUtteranceId = "EOF";
+        if(_speech.isSpeaking())
+            _speech.stop();
+    }
+
     @Override
     public boolean isSpeaking(){
 
         if(_speech == null)
             return false;
         return _speech.isSpeaking();
+    }
+
+
+    @Override
+    public void pause() {
+        if(_speech == null)
+            return;
+        _speech.stop();
+    }
+
+    @Override
+    public void resume() {
+        if(_speech == null)
+            return;
+
+        _speakNext();
     }
 
 }

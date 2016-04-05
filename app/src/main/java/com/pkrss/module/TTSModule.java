@@ -6,6 +6,8 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
 import com.pkrss.module.tts.ifly.IflyTTSWorker;
+import com.pkrss.module.tts.local.LocalTTSWorker;
+import com.pkrss.voicespeakking.data.SpData;
 import com.pkrss.voicespeakking.model.PlayerBarModel;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public final class TTSModule {
     public interface ITtsWorker{
         /**
          * get worker id
-         * @return
+         * @return @see: com.pkrss.voicespeakking.common.ETTSEngineIdenty
          */
         int getId();
 
@@ -87,6 +89,8 @@ public final class TTSModule {
         void stop();
     }
 
+    private Context _context;
+
     private ITtsWorker curWorker;
 
     private List<ITtsWorker> ttsWorkerList = new ArrayList<ITtsWorker>();
@@ -114,14 +118,50 @@ public final class TTSModule {
 
         }
 
-        curWorker = new IflyTTSWorker();
+        if(ttsWorkerList.size()==0) {
+            ttsWorkerList.add(new IflyTTSWorker());
+            ttsWorkerList.add(new LocalTTSWorker());
+            ttsWorkerList.add(new IflyTTSWorker());
+        }
 
-        ttsWorkerList.add(curWorker);
-
-        return curWorker.init(context);
+        _context = context;
+        return recreateTTSWorker();
     }
 
+    public boolean recreateTTSWorker(){
+        TTSModule.ITtsWorker worker = null;
 
+        int ettsEngineIdenty = SpData.getTTSEngineIdenty();
+
+        for (TTSModule.ITtsWorker i : ttsWorkerList) {
+            if(i.getId()==ettsEngineIdenty){
+                worker = i;
+                break;
+            }
+        }
+
+        if(curWorker!=null &&  curWorker.getId()== worker.getId())
+            return true;
+
+        if(curWorker!=null){
+            curWorker.destroy();
+            curWorker = null;
+        }
+
+        curWorker = worker;
+        return curWorker.init(_context);
+    }
+
+    public void uninit(){
+        if(_tm!=null) {
+            _tm.listen(_tm_listener, PhoneStateListener.LISTEN_NONE);
+            _tm = null;
+        }
+        if(curWorker!=null){
+            curWorker.destroy();
+            curWorker = null;
+        }
+    }
 
     private PhoneStateListener _tm_listener = new PhoneStateListener(){
 
@@ -132,13 +172,16 @@ public final class TTSModule {
 
             switch(state){
                 case TelephonyManager.CALL_STATE_IDLE:
-                    _resumeTTSByCall();
+                    if(curWorker!=null)
+                        curWorker.resume();
                     break;
                 case TelephonyManager.CALL_STATE_OFFHOOK:
-                    _pauseTTSByCall();
+                    if(curWorker!=null)
+                        curWorker.pause();
                     break;
                 case TelephonyManager.CALL_STATE_RINGING:
-                    _pauseTTSByCall();
+                    if(curWorker!=null)
+                        curWorker.pause();
                     break;
             }
         }
