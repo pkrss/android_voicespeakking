@@ -26,8 +26,8 @@ public final class PkrssTTSAdapter extends ArrayAdapter<PkrssTTSAdapter.PkrssTTS
 
     public static final class PkrssTTSModel{
         private Locale locale;
-        private String id;
-        private String title;
+//        private String id;
+//        private String title;
 
         public Locale getLocale() {
             return locale;
@@ -36,21 +36,21 @@ public final class PkrssTTSAdapter extends ArrayAdapter<PkrssTTSAdapter.PkrssTTS
         public void setLocale(Locale locale) {
             this.locale = locale;
         }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
+//
+//        public String getId() {
+//            return id;
+//        }
+//
+//        public void setId(String id) {
+//            this.id = id;
+//        }
 
         public String getTitle() {
-            return title;
+            return locale!=null ? locale.getDisplayName() : "?";
         }
 
         public void setTitle(String title) {
-            this.title = title;
-        }
+//            this.title = title;
+//        }
     }
 }

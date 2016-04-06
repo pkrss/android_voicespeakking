@@ -2,6 +2,7 @@ package com.pkrss.voicespeakking.handler;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.pkrss.module.tts.ifly.ApkInstaller;
 import com.pkrss.voicespeakking.model.TTSTabPkrssModel;
@@ -20,6 +21,29 @@ public final class TTSTabPkrssHandler {
         this.ttsTabPkrssModel = ttsTabPkrssModel;
     }
 
-    public void clickButton(View v){
-    }
+    public AdapterView.OnItemSelectedListener onLocaleItemSelected = new AdapterView.OnItemSelectedListener(){
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
+    public AdapterView.OnItemSelectedListener onEngineItemSelected = new AdapterView.OnItemSelectedListener(){
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
 }

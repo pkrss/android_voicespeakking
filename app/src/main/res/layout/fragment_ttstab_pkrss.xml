@@ -6,11 +6,11 @@
 
         <variable
             name="ttsTabPkrssModel"
-            type="com.pkrss.voicespeakking.model.TTSTabIFlyModel" />
+            type="com.pkrss.voicespeakking.model.TTSTabPkrssModel" />
 
         <variable
             name="ttsTabPkrssHandler"
-            type="com.pkrss.voicespeakking.handler.TTSTabIFlyHandler" />
+            type="com.pkrss.voicespeakking.handler.TTSTabPkrssHandler" />
     </data>
 
     <LinearLayout
@@ -22,17 +22,19 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:orientation="vertical">
 
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:spinnerAdapter="@{ttsTabPkrssModel.spinnerLocalAdapter}"
+            android:setOnItemSelectedListener="@{ttsTabPkrssHandler.onLocaleItemSelected}" />
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:spinnerAdapter="{{}}"/>
-
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:spinnerAdapter="@{ttsTabPkrssModel.spinnerEngineAdapter}"
+            android:setOnItemSelectedListener="@{ttsTabPkrssHandler.onEngineItemSelected}" />
 
     </LinearLayout>
 </layout>

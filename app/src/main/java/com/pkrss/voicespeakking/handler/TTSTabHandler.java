@@ -2,6 +2,7 @@ package com.pkrss.voicespeakking.handler;
 
 import android.widget.RadioGroup;
 
+import com.pkrss.module.TTSModule;
 import com.pkrss.voicespeakking.R;
 import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
 import com.pkrss.voicespeakking.model.TTSTabModel;
@@ -23,6 +24,8 @@ public final class TTSTabHandler {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
 
             ttsTabModel.setEttsEngineIdenty(checkedId);
+
+            TTSModule.getInstance().recreateTTSWorker();
 
             ttsTabModel.getViewPager().setCurrentItem(1, true);
         }
