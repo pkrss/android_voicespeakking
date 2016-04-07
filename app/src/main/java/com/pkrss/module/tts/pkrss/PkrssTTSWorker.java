@@ -21,7 +21,10 @@ import com.pkrss.voicespeakking.model.TTSTabPkrssModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -84,12 +87,18 @@ public final class PkrssTTSWorker extends BaseTTS {
         return true;
     }
 
-    public static void initTTSListEngine(final PkrssTTSAdapter spinnerLocalAdapter){
+    public interface ITTSListener{
+        void onCallback(Collection<PkrssTTSAdapter.PkrssTTSModel> data);
+    }
+
+    public static void initTTSListLocale(final ITTSListener ttsListener){ // final PkrssTTSAdapter spinnerLocalAdapter
         RemoteCacheDao.getTTSList(getBaseurl() +  "?task=getTTSList", new RemoteCacheDao.IRemoteCacheDataListener() {
 
             @Override
             public void onResult(String content) {
 
+                final List<PkrssTTSAdapter.PkrssTTSModel> data = new ArrayList<PkrssTTSAdapter.PkrssTTSModel>();
+                data.clear();
                 do {
                     if (WebHelper.IsNullOrEmpty(content))
                         break;
@@ -115,6 +124,8 @@ public final class PkrssTTSWorker extends BaseTTS {
                         JSONObject obj, obj2;
                         JSONArray ary;
 
+                        boolean curLocalePutFront = false;
+
                         for (int i = 0, c = pkrssEngineList.length(); i < c; ++i) {
 
                             obj = pkrssEngineList.optJSONObject(i);
@@ -132,56 +143,182 @@ public final class PkrssTTSWorker extends BaseTTS {
                                 language = language.substring(0, pos);
                             }
 
-                            if(curEngineId == null || curEngineId.length() == 0){
-                                if(curLanguage.equals(language)){
-                                    if(country.equals(curCountry)){
-                                        ary = obj.optJSONArray("tts");
-                                        if (ary != null && ary.length()>0) {
-                                            obj2 = ary.optJSONObject(0);
-                                            curEngineId = obj2.optString("id");
-                                            SpData.setTTSPkrssVoicer(curEngineId);
+                            boolean isCurrentEngineLocale = false;
+
+                            if(!curLocalePutFront) {
+                                if (curEngineId == null || curEngineId.length() == 0) {
+                                    if (curLanguage.equals(language)) {
+                                        if (country.equals(curCountry)) {
+//                                            ary = obj.optJSONArray("tts");
+//                                            if (ary != null && ary.length() > 0) {
+//                                                obj2 = ary.optJSONObject(0);
+//                                                curEngineId = obj2.optString("id");
+//                                                SpData.setTTSPkrssVoicer(curEngineId);
+                                                isCurrentEngineLocale = true;
+//                                            }
+                                        }
+                                    }
+                                } else {
+                                    ary = obj.optJSONArray("tts");
+                                    if (ary != null) {
+                                        for (int i2 = 0, c2 = ary.length(); i2 < c2; ++i2) {
+                                            obj2 = ary.optJSONObject(i2);
+                                            if (obj2 == null)
+                                                continue;
+
+                                            String id = obj2.optString("id");
+                                            if (id == null)
+                                                continue;
+
+                                            if (curEngineId.equals(id)) {
+                                                isCurrentEngineLocale = true;
+                                            }
                                         }
                                     }
                                 }
                             }
 
+                            Locale loc = new Locale(language, country);
                             PkrssTTSAdapter.PkrssTTSModel pkrssTTSModel = new PkrssTTSAdapter.PkrssTTSModel();
-                            pkrssTTSModel.setLocale(new Locale(language, country));
-                            spinnerLocalAdapter.add(pkrssTTSModel);
 
+                            String id = language;
+                            if(country!=null && country.length()>0)
+                                id += "_" + country;
+                            pkrssTTSModel.setId(id);
+                            pkrssTTSModel.setTitle(loc.getDisplayName());
 
-
-//                            ary = obj.optJSONArray("tts");
-//                            if (ary != null) {
-//                                for (int i2 = 0, c2 = ary.length(); i2 < c2; ++i2) {
-//                                    obj2 = ary.optJSONObject(i2);
-//                                    if (obj2 == null)
-//                                        continue;
-//
-//                                    String id = obj2.optString("id");
-//                                    if (id == null)
-//                                        continue;
-//                                    String name = obj2.optString("name");
-//                                    if (name == null)
-//                                        continue;
-//
-//                                    TTSEngineInfo ttsEngineInfo = new TTSEngineInfo(id, name, language, new Locale(language, country2));
-//                                    engineInfos.add(ttsEngineInfo);
-//                                }
-//                            }
+                            if(isCurrentEngineLocale) {
+                                data.add(0, pkrssTTSModel);
+                                curLocalePutFront = true;
+                            }else {
+                                data.add(pkrssTTSModel);
+                            }
                         }
 
                     } catch (Exception e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 } while (false);
 
-//                BaseApplication.getHandler().postDelayed(new Runnable() {
-//                    public void run() {
-//                        _init_locale_and_engine_cb();
-//                    }
-//                }, 2000);
+                AppVar.getHandler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(ttsListener!=null){
+                            ttsListener.onCallback(data);
+                        }
+                    }
+                });
+            }
+
+        });
+    }
+
+    public static void initTTSListEngine(final String localeId, final ITTSListener ttsListener){ // final PkrssTTSAdapter spinnerLocalAdapter
+        RemoteCacheDao.getTTSList(getBaseurl() +  "?task=getTTSList", new RemoteCacheDao.IRemoteCacheDataListener() {
+
+            @Override
+            public void onResult(String content) {
+
+                final List<PkrssTTSAdapter.PkrssTTSModel> data = new ArrayList<PkrssTTSAdapter.PkrssTTSModel>();
+                data.clear();
+                do {
+                    if (WebHelper.IsNullOrEmpty(content))
+                        break;
+
+                    try {
+                        JSONArray pkrssEngineList = new JSONArray(content);
+
+                        if(pkrssEngineList == null)
+                            break;
+
+                        PkrssTTSAdapter.PkrssTTSModel bestPkrssTTSModel = null;
+
+                        String curCountry = "";
+                        String curLanguage = "";
+                        int pos;
+
+                        pos = localeId.replace('-', '_').indexOf('_');
+                        if (pos > 0) {
+                            curCountry = localeId.substring(pos + 1);
+                            curLanguage = localeId.substring(0, pos);
+                        }
+
+                        String curEngineId = SpData.getTTSPkrssVoicer();
+
+                        String country, language;
+
+                        JSONObject obj, obj2;
+                        JSONArray ary;
+
+                        for (int i = 0, c = pkrssEngineList.length(); i < c; ++i) {
+
+                            obj = pkrssEngineList.optJSONObject(i);
+                            if (obj == null)
+                                continue;
+
+                            language = obj.optString("locale");
+                            if (language == null)
+                                continue;
+
+                            country = "";
+                            pos = language.replace('-', '_').indexOf('_');
+                            if (pos > 0) {
+                                country = language.substring(pos + 1);
+                                language = language.substring(0, pos);
+                            }
+
+                            if(!language.equals(curLanguage))
+                                continue;
+
+                            ary = obj.optJSONArray("tts");
+                            if (ary != null) {
+                                for (int i2 = 0, c2 = ary.length(); i2 < c2; ++i2) {
+                                    obj2 = ary.optJSONObject(i2);
+                                    if (obj2 == null)
+                                        continue;
+
+                                    String id = obj2.optString("id");
+                                    if (id == null)
+                                        continue;
+                                    String name = obj2.optString("name");
+                                    if (name == null)
+                                        continue;
+
+                                    PkrssTTSAdapter.PkrssTTSModel pkrssTTSModel = new PkrssTTSAdapter.PkrssTTSModel();
+                                    pkrssTTSModel.setId(id);
+                                    pkrssTTSModel.setTitle(name);
+
+                                    if(id.equals(curEngineId)){
+                                        bestPkrssTTSModel = pkrssTTSModel;
+                                        continue;
+                                    }
+
+                                    if (curCountry.equals(country)) {
+                                        data.add(0, pkrssTTSModel);
+                                    } else {
+                                        data.add(pkrssTTSModel);
+                                    }
+                                }
+                            }
+                        }
+
+                        if(bestPkrssTTSModel!=null){
+                            data.add(0, bestPkrssTTSModel);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } while (false);
+
+                AppVar.getHandler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(ttsListener!=null){
+                            ttsListener.onCallback(data);
+                        }
+                    }
+                });
             }
 
         });

@@ -36,5 +36,11 @@
             android:spinnerAdapter="@{ttsTabPkrssModel.spinnerEngineAdapter}"
             android:setOnItemSelectedListener="@{ttsTabPkrssHandler.onEngineItemSelected}" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ok"
+            android:onClick="@{ttsTabPkrssHandler.onClickApply}"/>
+
     </LinearLayout>
 </layout>
