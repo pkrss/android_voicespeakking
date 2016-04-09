@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
@@ -56,6 +57,29 @@ public final class LocalTTSWorker extends BaseTTS {
     int mCurrentTTSEngineIndex = 0;
     int mCecreateTTS = 0;
 
+    private UtteranceProgressListener utteranceProgressListener = new UtteranceProgressListener(){
+
+        @Override
+        public void onStart(String utteranceId) {
+
+        }
+
+        @Override
+        public void onDone(String utteranceId) {
+            Log.d(LOGTAG, "onDone:" + utteranceId);
+            if(mCurPlayingUtteranceId.equals(utteranceId))
+                _speakNext();
+        }
+
+        @Override
+        public void onError(String utteranceId) {
+            Log.d(LOGTAG, "onError:" + utteranceId);
+            stop();
+//                        onError_triggerEvent(mutteranceId);
+        }
+
+    };
+
     @Override
     public int getId() {
         return ETTSEngineIdenty.local;
@@ -87,29 +111,6 @@ public final class LocalTTSWorker extends BaseTTS {
                         }
                     }
                 };
-
-                _speech.setOnUtteranceProgressListener(new android.speech.tts.UtteranceProgressListener(){
-
-                    @Override
-                    public void onStart(String utteranceId) {
-
-                    }
-
-                    @Override
-                    public void onDone(String utteranceId) {
-                        Log.d(LOGTAG, "onDone:" + utteranceId);
-                        if(mCurPlayingUtteranceId.equals(utteranceId))
-                            _speakNext();
-                    }
-
-                    @Override
-                    public void onError(String utteranceId) {
-                        Log.d(LOGTAG, "onError:" + utteranceId);
-                        stop();
-//                        onError_triggerEvent(mutteranceId);
-                    }
-
-                });
             }
 
             recreateTTS();
@@ -126,6 +127,8 @@ public final class LocalTTSWorker extends BaseTTS {
         releaseSpeech();
 
         _speech = new TextToSpeech(_context, _ttsLisntener, _engineName);
+
+        _speech.setOnUtteranceProgressListener(utteranceProgressListener);
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
@@ -156,6 +159,7 @@ public final class LocalTTSWorker extends BaseTTS {
 
     private void releaseSpeech(){
         if (_speech != null) {
+            _speech.setOnUtteranceProgressListener(null);
             _speech.stop();
             _speech.shutdown();
             _speech = null;

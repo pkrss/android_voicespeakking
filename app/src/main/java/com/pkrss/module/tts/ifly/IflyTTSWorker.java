@@ -12,7 +12,9 @@ import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
+import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
+import com.pkrss.common.helper.ManifestHelper;
 import com.pkrss.module.TTSModule;
 import com.pkrss.voicespeakking.R;
 import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
@@ -105,8 +107,9 @@ public final class IflyTTSWorker implements TTSModule.ITtsWorker {
         public void onSpeakProgress(int percent, int beginPos, int endPos) {
             // 播放进度
             mPercentForPlaying = percent;
-            showTip(String.format(context.getString(R.string.tts_toast_format),
-                    mPercentForBuffering, mPercentForPlaying));
+            showTip(String.format(context.getString(R.string.tts_toast_format),  mPercentForBuffering, mPercentForPlaying));
+
+            TTSModule.onProgress_triggerEvent(mPercentForPlaying);
         }
 
         @Override
@@ -116,6 +119,8 @@ public final class IflyTTSWorker implements TTSModule.ITtsWorker {
             } else if (error != null) {
                 showTip(error.getPlainDescription(true));
             }
+
+            TTSModule.onCompleted_triggerEvent();
         }
 
         @Override
@@ -143,6 +148,15 @@ public final class IflyTTSWorker implements TTSModule.ITtsWorker {
     public boolean init(Context context) {
 
         this.context = context;
+
+        // 应用程序入口处调用，避免手机内存过小，杀死后台进程后通过历史intent进入Activity造成SpeechUtility对象为null
+        // 如在Application中调用初始化，需要在Mainifest中注册该Applicaiton
+        // 注意：此接口在非主进程调用会返回null对象，如需在非主进程使用语音功能，请增加参数：SpeechConstant.FORCE_LOGIN+"=true"
+        // 参数间使用半角“,”分隔。
+        // 设置你申请的应用appid,请勿在'='与appid之间添加空格及空转义符
+        // 注意： appid 必须和下载的SDK保持一致，否则会出现10407错误
+        if(SpeechUtility.getUtility() == null)
+            SpeechUtility.createUtility(context.getApplicationContext(), "appid=" + ManifestHelper.getApplicationMeta(context,"IFLYTEK_APPKEY"));
 
         // 初始化合成对象
         mTts = SpeechSynthesizer.createSynthesizer(context, mTtsInitListener);

@@ -54,7 +54,7 @@ public final class TTSTabPkrssFragment extends Fragment {
         });
 
         pkrssTTSEngineAdapter = new PkrssTTSAdapter(getContext());
-        pkrssTTSEngineAdapter.setSpinnerEngineAdapter(pkrssTTSEngineAdapter);
+        ttsTabPkrssModel.setSpinnerEngineAdapter(pkrssTTSEngineAdapter);
 
         return rootView;
     }

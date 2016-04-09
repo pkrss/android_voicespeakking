@@ -8,6 +8,7 @@ import android.telephony.TelephonyManager;
 
 import com.pkrss.module.tts.ifly.IflyTTSWorker;
 import com.pkrss.module.tts.local.LocalTTSWorker;
+import com.pkrss.module.tts.pkrss.PkrssTTSWorker;
 import com.pkrss.voicespeakking.data.SpData;
 import com.pkrss.voicespeakking.model.PlayerBarModel;
 
@@ -126,8 +127,8 @@ public final class TTSModule {
         }
 
         if(ttsWorkerList.size()==0) {
-            ttsWorkerList.add(new IflyTTSWorker());
             ttsWorkerList.add(new LocalTTSWorker());
+            ttsWorkerList.add(new PkrssTTSWorker());
             ttsWorkerList.add(new IflyTTSWorker());
         }
 
@@ -212,9 +213,8 @@ public final class TTSModule {
 
     /**
      * call by tts
-     * @param utteranceId
      */
-    public static void onCompleted_triggerEvent(String utteranceId){
+    public static void onCompleted_triggerEvent(){
         PlayerBarModel.getInstance().setPlaying(false);
     }
 

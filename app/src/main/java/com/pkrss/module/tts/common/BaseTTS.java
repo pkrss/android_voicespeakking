@@ -37,7 +37,7 @@ public abstract class BaseTTS implements TTSModule.ITtsWorker {
             return;
 
         _subManyOperHelper.stop();
-        TTSModule.onCompleted_triggerEvent(mutteranceId);
+        TTSModule.onCompleted_triggerEvent();
         _child_onDoStop();
     }
 
