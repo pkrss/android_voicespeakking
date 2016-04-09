@@ -36,6 +36,8 @@
             android:label="@string/title_activity_ttstab"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <activity android:name=".activity.TTSTabOptionActivity" />
         <activity android:name=".activity.CustomFeedbackActivity" />
 
 

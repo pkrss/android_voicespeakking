@@ -1,9 +1,12 @@
 package com.pkrss.voicespeakking.handler;
 
+import android.content.Intent;
 import android.widget.RadioGroup;
 
 import com.pkrss.module.TTSModule;
 import com.pkrss.voicespeakking.R;
+import com.pkrss.voicespeakking.activity.TTSTabActivity;
+import com.pkrss.voicespeakking.activity.TTSTabOptionActivity;
 import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
 import com.pkrss.voicespeakking.model.TTSTabModel;
 
@@ -27,7 +30,7 @@ public final class TTSTabHandler {
 
             TTSModule.getInstance().recreateTTSWorker();
 
-            ttsTabModel.getViewPager().setCurrentItem(1, true);
+            ttsTabModel.getActivity().startActivity(new Intent(ttsTabModel.getActivity(), TTSTabOptionActivity.class));;
         }
     };
 }

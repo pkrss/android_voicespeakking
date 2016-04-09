@@ -1,5 +1,6 @@
 package com.pkrss.voicespeakking.model;
 
+import android.app.Activity;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.v4.view.ViewPager;
@@ -22,14 +23,14 @@ public final class TTSTabModel extends BaseObservable {
     /**
      * 页面切换
      */
-    private ViewPager viewPager;
+    private Activity activity;
 
-    public ViewPager getViewPager() {
-        return viewPager;
+    public Activity getActivity() {
+        return activity;
     }
 
-    public void setViewPager(ViewPager viewPager) {
-        this.viewPager = viewPager;
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 
     private int ettsEngineIdenty = SpData.getTTSEngineIdenty();

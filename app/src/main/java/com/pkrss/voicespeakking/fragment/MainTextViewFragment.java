@@ -9,11 +9,8 @@ import android.view.ViewGroup;
 
 import com.pkrss.voicespeakking.R;
 import com.pkrss.voicespeakking.databinding.FragmentMainTextviewBinding;
-import com.pkrss.voicespeakking.databinding.FragmentTtstabBinding;
 import com.pkrss.voicespeakking.handler.MainHandler;
-import com.pkrss.voicespeakking.handler.TTSTabHandler;
 import com.pkrss.voicespeakking.model.MainModel;
-import com.pkrss.voicespeakking.model.TTSTabModel;
 
 /**
  * Created by liand on 2016/2/13.
