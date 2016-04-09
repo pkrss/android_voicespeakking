@@ -13,7 +13,10 @@ android {
 
         multiDexEnabled = true
         multiDexKeepProguard file('../share/multi-dex-keep.txt')
-        dataBinding.enabled = true
+
+        dataBinding {
+            enabled = true
+        }
     }
     buildTypes {
         release {

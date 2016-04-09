@@ -1,5 +1,12 @@
 package com.pkrss.voicespeakking.handler;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.view.View;
+import android.widget.EditText;
+
+import com.pkrss.voicespeakking.R;
 import com.pkrss.voicespeakking.model.MainModel;
 
 /**
@@ -18,11 +25,24 @@ public final class MainHandler {
             playerBarHandler = new PlayerBarHandler(mainModel);
         return playerBarHandler;
     }
-    private ContentHandler contentHandler;
 
-    public ContentHandler getContentHandler() {
-        if(contentHandler==null)
-            contentHandler = new ContentHandler(mainModel);
-        return contentHandler;
+    public void clickEditText(View v){
+
+        Context c = v.getContext();
+
+        final EditText et = new EditText(c);
+        et.setText(mainModel.getContentModel().getContent());
+        new AlertDialog.Builder(c).setTitle(R.string.edit).setIcon(
+                android.R.drawable.ic_dialog_info).setView(et).setPositiveButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            String content = et.getText().toString();
+
+                            mainModel.getContentModel().setContent(content);
+
+                            dialog.dismiss();
+                        }
+                    })
+                .setNegativeButton(android.R.string.cancel, null).show();
     }
 }

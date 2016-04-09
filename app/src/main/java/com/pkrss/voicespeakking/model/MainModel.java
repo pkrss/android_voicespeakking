@@ -8,16 +8,6 @@ import android.support.v4.view.ViewPager;
  */
 public final class MainModel extends BaseObservable {
 
-    private ViewPager viewPager;
-
-    public ViewPager getViewPager() {
-        return viewPager;
-    }
-
-    public void setViewPager(ViewPager viewPager) {
-        this.viewPager = viewPager;
-    }
-
     public PlayerBarModel getPlayerBarModel() {
         return PlayerBarModel.getInstance();
     }
