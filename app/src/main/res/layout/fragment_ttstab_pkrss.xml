@@ -25,22 +25,23 @@
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:spinnerAdapter="@{ttsTabPkrssModel.spinnerLocalAdapter}"
-            android:setOnItemSelectedListener="@{ttsTabPkrssHandler.onLocaleItemSelected}" />
+            android:setOnItemSelectedListener="@{ttsTabPkrssHandler.onLocaleItemSelected}"
+            android:layout_marginTop="10dp"/>
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:spinnerAdapter="@{ttsTabPkrssModel.spinnerEngineAdapter}"
-            android:setOnItemSelectedListener="@{ttsTabPkrssHandler.onEngineItemSelected}" />
+            android:setOnItemSelectedListener="@{ttsTabPkrssHandler.onEngineItemSelected}"
+            android:layout_marginTop="10dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ok"
-            android:onClick="@{ttsTabPkrssHandler.onClickApply}"/>
+            android:onClick="@{ttsTabPkrssHandler.onClickApply}"
+            android:layout_marginTop="10dp"/>
 
     </LinearLayout>
 </layout>

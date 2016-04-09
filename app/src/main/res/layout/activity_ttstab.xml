@@ -15,56 +15,24 @@
             type="com.pkrss.voicespeakking.handler.TTSTabHandler" />
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/main_content"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context="com.pkrss.voicespeakking.activity.TTSTabActivity">
+        android:orientation="vertical"
+        android:fitsSystemWindows="true">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/appbar_padding_top"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:text="@string/ttstab_engine_title"
+            android:textSize="9pt" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
+        <RadioGroup android:contentDescription="@string/ttstab_engine_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:onCheckedChangeListener="@{ttsTabHandler.ttsEnginesChanged}" android:radioGroupAdapter="@{ttsTabModel.ttsRadioGroupAdapter}" android:orientation="vertical">
+            <!--<RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/local" android:text="@string/local" android:checked="@{ttsTabModel.ettsEngineIdenty==ETTSEngineIdenty.local ? true:false}"/>-->
+            <!--<RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/pkrss" android:text="@string/pkrss" android:checked="@{ttsTabModel.ettsEngineIdenty==ETTSEngineIdenty.pkrss ? true:false}"/>-->
+            <!--<RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/ifly" android:text="@string/ifly" android:checked="@{ttsTabModel.ettsEngineIdenty==ETTSEngineIdenty.ifly ? true:false}"/>-->
+        </RadioGroup>
 
-            </android.support.v7.widget.Toolbar>
-
-        </android.support.design.widget.AppBarLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/ttstab_engine_title"
-                android:textSize="9pt" />
-
-            <RadioGroup android:contentDescription="@string/ttstab_engine_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:onCheckedChangeListener="@{ttsTabHandler.ttsEnginesChanged}" android:radioGroupAdapter="@{ttsTabModel.ttsRadioGroupAdapter}" android:orientation="vertical">
-                <!--<RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/local" android:text="@string/local" android:checked="@{ttsTabModel.ettsEngineIdenty==ETTSEngineIdenty.local ? true:false}"/>-->
-                <!--<RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/pkrss" android:text="@string/pkrss" android:checked="@{ttsTabModel.ettsEngineIdenty==ETTSEngineIdenty.pkrss ? true:false}"/>-->
-                <!--<RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/ifly" android:text="@string/ifly" android:checked="@{ttsTabModel.ettsEngineIdenty==ETTSEngineIdenty.ifly ? true:false}"/>-->
-            </RadioGroup>
-
-        </LinearLayout>
-
-    </android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>
 
 </layout>

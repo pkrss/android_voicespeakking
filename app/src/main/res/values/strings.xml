@@ -11,8 +11,6 @@
     <string name="common_input_text">Please input text here...</string>
     <string name="feedback">Feedback</string>
     <string name="speak">Speak</string>
-    <string name="title_activity_ttstab">TTSTabActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="ttstab_engine_title">Please select one voice engine:</string>
     <string name="local">Local</string>
@@ -30,4 +28,7 @@
     <string name="text_getdownloadlink">Getting download link</string>
 
     <string name="error_not_found_tts_data">Not found voice data in your system</string>
+
+    <string name="title_activity_ttstab">1. TTS selector</string>
+    <string name="title_activity_ttsoption">2. TTS option</string>
 </resources>

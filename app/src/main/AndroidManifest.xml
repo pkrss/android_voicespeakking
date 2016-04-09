@@ -33,11 +33,11 @@
         </activity>
         <activity
             android:name=".activity.TTSTabActivity"
-            android:label="@string/title_activity_ttstab"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/title_activity_ttstab">
         </activity>
 
-        <activity android:name=".activity.TTSTabOptionActivity" />
+        <activity android:name=".activity.TTSTabOptionActivity"
+            android:label="@string/title_activity_ttsoption" />
         <activity android:name=".activity.CustomFeedbackActivity" />
 
 
