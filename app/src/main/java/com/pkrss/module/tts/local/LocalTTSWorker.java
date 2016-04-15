@@ -5,23 +5,14 @@ import android.content.Context;
 import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.pkrss.module.TTSModule;
 import com.pkrss.module.tts.common.BaseTTS;
-import com.pkrss.module.tts.common.SubManyOperHelper;
-import com.pkrss.voicespeakking.R;
 import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
-import com.pkrss.voicespeakking.fragment.TTSTabIFlyFragment;
 import com.pkrss.voicespeakking.fragment.TTSTabLocalFragment;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * Created by liand on 2016/3/24.

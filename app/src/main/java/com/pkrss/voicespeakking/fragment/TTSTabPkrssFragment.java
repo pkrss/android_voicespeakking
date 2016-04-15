@@ -1,8 +1,9 @@
 package com.pkrss.voicespeakking.fragment;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +30,9 @@ public final class TTSTabPkrssFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        Context context = inflater.getContext();
         ttsTabPkrssModel = new TTSTabPkrssModel();
-        ttsTabPkrssHandler = new TTSTabPkrssHandler(getContext(), ttsTabPkrssModel, this);
+        ttsTabPkrssHandler = new TTSTabPkrssHandler(context, ttsTabPkrssModel, this);
 
         FragmentTtstabPkrssBinding binding =  DataBindingUtil.inflate(inflater, R.layout.fragment_ttstab_pkrss, container, false);
         binding.setTtsTabPkrssModel(ttsTabPkrssModel);
@@ -38,7 +40,7 @@ public final class TTSTabPkrssFragment extends Fragment {
         View rootView = binding.getRoot();
 
 
-        pkrssTTSLocaleAdapter = new PkrssTTSAdapter(getContext());
+        pkrssTTSLocaleAdapter = new PkrssTTSAdapter(context);
         ttsTabPkrssModel.setSpinnerLocalAdapter(pkrssTTSLocaleAdapter);
         PkrssTTSWorker.initTTSListLocale(new PkrssTTSWorker.ITTSListener(){
 
@@ -53,7 +55,7 @@ public final class TTSTabPkrssFragment extends Fragment {
             }
         });
 
-        pkrssTTSEngineAdapter = new PkrssTTSAdapter(getContext());
+        pkrssTTSEngineAdapter = new PkrssTTSAdapter(context);
         ttsTabPkrssModel.setSpinnerEngineAdapter(pkrssTTSEngineAdapter);
 
         return rootView;

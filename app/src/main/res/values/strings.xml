@@ -11,6 +11,7 @@
     <string name="common_input_text">Please input text here...</string>
     <string name="feedback">Feedback</string>
     <string name="speak">Speak</string>
+    <string name="back">Back</string>
 
     <string name="ttstab_engine_title">Please select one voice engine:</string>
     <string name="local">Local</string>
@@ -31,4 +32,5 @@
 
     <string name="title_activity_ttstab">1. TTS selector</string>
     <string name="title_activity_ttsoption">2. TTS option</string>
+    <string name="title_activity_nav">NavActivity</string>
 </resources>

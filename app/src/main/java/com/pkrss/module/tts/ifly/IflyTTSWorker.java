@@ -1,10 +1,10 @@
 package com.pkrss.module.tts.ifly;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.iflytek.cloud.ErrorCode;

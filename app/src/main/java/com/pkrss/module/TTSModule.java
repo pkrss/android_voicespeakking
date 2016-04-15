@@ -1,8 +1,8 @@
 package com.pkrss.module;
 
+import android.app.Fragment;
 import android.app.Service;
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 

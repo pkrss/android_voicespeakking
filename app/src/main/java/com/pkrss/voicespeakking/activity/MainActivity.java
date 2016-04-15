@@ -81,9 +81,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_edit) {
-            this.startActivity(new Intent(this, TTSTabActivity.class));
+            mainHandler.clickEditText(this);
         } else if (id == R.id.nav_tts) {
-            mainHandler.clickEditText(item.getActionView());
+            this.startActivity(new Intent(this, TTSTabActivity.class));
         } else if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {

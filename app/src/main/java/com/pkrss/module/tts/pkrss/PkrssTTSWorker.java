@@ -1,10 +1,9 @@
 package com.pkrss.module.tts.pkrss;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.support.v4.app.Fragment;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.pkrss.common.base.AppVar;
@@ -16,7 +15,6 @@ import com.pkrss.voicespeakking.adapter.PkrssTTSAdapter;
 import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
 import com.pkrss.voicespeakking.data.SpData;
 import com.pkrss.voicespeakking.fragment.TTSTabPkrssFragment;
-import com.pkrss.voicespeakking.model.TTSTabPkrssModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

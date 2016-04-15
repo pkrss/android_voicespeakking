@@ -26,9 +26,9 @@ public final class MainHandler {
         return playerBarHandler;
     }
 
-    public void clickEditText(View v){
+    public void clickEditText(Context c){
 
-        Context c = v.getContext();
+//        Context c = v.getContext();
 
         final EditText et = new EditText(c);
         et.setText(mainModel.getContentModel().getContent());

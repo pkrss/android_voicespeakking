@@ -1,8 +1,9 @@
 package com.pkrss.voicespeakking.fragment;
 
+import android.app.Fragment;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,9 @@ public final class TTSTabIFlyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        Context context = inflater.getContext();
         ttsTabIFlyModel = new TTSTabIFlyModel();
-        ttsTabIFlyHandler = new TTSTabIFlyHandler(getContext(), ttsTabIFlyModel);
+        ttsTabIFlyHandler = new TTSTabIFlyHandler(context, ttsTabIFlyModel);
 
         FragmentTtstabIflyBinding binding =  DataBindingUtil.inflate(inflater, R.layout.fragment_ttstab_ifly, container, false);
         binding.setTtsTabIFlyModel(ttsTabIFlyModel);

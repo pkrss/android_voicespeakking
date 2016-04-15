@@ -7,6 +7,7 @@
         <variable name="mainModel" type="com.pkrss.voicespeakking.model.MainModel"/>
         <variable name="mainHandler" type="com.pkrss.voicespeakking.handler.MainHandler"/>
     </data>
+
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
