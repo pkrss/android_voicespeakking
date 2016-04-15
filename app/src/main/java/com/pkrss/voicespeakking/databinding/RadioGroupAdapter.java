@@ -39,8 +39,10 @@ public final class RadioGroupAdapter {
                     RadioButton radioButton = new RadioButton(radioGroup.getContext());
                     RadioGroup.LayoutParams lparam = new RadioGroup.LayoutParams ( RadioGroup.LayoutParams.MATCH_PARENT , RadioGroup.LayoutParams.WRAP_CONTENT );
 
-                    if(newValue.getValue() == bean.getId())
-                        radioButton.setSelected(true);
+                    if(newValue.getValue() == bean.getId()) {
+//                        radioButton.setSelected(true);
+                        radioButton.setChecked(true);
+                    }
                     radioButton.setId(bean.getId());
                     radioButton.setText(bean.getTitle());
                     radioGroup.addView ( radioButton,  lparam);

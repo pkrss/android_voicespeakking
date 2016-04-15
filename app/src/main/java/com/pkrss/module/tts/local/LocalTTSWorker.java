@@ -24,7 +24,6 @@ public final class LocalTTSWorker extends BaseTTS {
 
     private TextToSpeech _speech;
     private Context _context;
-    private Boolean _inited = false;
     private HashMap<String, String> _tts_params;
     private TextToSpeech.OnInitListener _ttsLisntener;
 
@@ -43,9 +42,6 @@ public final class LocalTTSWorker extends BaseTTS {
      */
     private String mCurPlayingUtteranceId = "";
 
-    Boolean mManualSetEngineName = false;
-    Boolean mCurrentTTSLangOk = false;
-    int mCurrentTTSEngineIndex = 0;
     int mCecreateTTS = 0;
 
     private UtteranceProgressListener utteranceProgressListener = new UtteranceProgressListener(){
@@ -83,6 +79,8 @@ public final class LocalTTSWorker extends BaseTTS {
 
     @Override
     public boolean init(Context context){
+
+        super.init(context);
 
         _context = context.getApplicationContext();
 

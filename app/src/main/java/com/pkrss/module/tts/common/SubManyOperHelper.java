@@ -119,10 +119,10 @@ public final class SubManyOperHelper {
 //				mTimer.cancel();
 
         if (mStartedStatus) {
+            mStartedStatus = false;
+
             if (_callBack != null)
                 _callBack.onStop();
-
-            mStartedStatus = false;
         }
     }
 
