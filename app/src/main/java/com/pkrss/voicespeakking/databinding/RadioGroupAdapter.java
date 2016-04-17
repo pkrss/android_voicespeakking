@@ -45,6 +45,7 @@ public final class RadioGroupAdapter {
                     }
                     radioButton.setId(bean.getId());
                     radioButton.setText(bean.getTitle());
+                    radioButton.setOnClickListener(bean.getOnClickListener());
                     radioGroup.addView ( radioButton,  lparam);
                 }
             }

@@ -21,16 +21,16 @@ public final class TTSTabHandler {
         this.ttsTabModel = ttsTabModel;
     }
 
-    public RadioGroup.OnCheckedChangeListener ttsEnginesChanged = new RadioGroup.OnCheckedChangeListener(){
-
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-            ttsTabModel.setEttsEngineIdenty(checkedId);
-
-            TTSModule.getInstance().recreateTTSWorker();
-
-            ttsTabModel.getActivity().startActivity(new Intent(ttsTabModel.getActivity(), TTSTabOptionActivity.class));;
-        }
-    };
+//    public RadioGroup.OnCheckedChangeListener ttsEnginesChanged = new RadioGroup.OnCheckedChangeListener(){
+//
+//        @Override
+//        public void onCheckedChanged(RadioGroup group, int checkedId) {
+//
+//            ttsTabModel.setEttsEngineIdenty(checkedId);
+//
+//            TTSModule.getInstance().recreateTTSWorker();
+//
+//            ttsTabModel.getActivity().startActivity(new Intent(ttsTabModel.getActivity(), TTSTabOptionActivity.class));;
+//        }
+//    };
 }

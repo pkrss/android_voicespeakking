@@ -84,4 +84,8 @@
         <item>5</item>
     </string-array>
     <string formatted="false" name="tts_toast_format" translatable="false">缓冲进度为%d%%，播放进度为%d%%</string>
+
+
+    <string formatted="false" name="title_author" translatable="false">pkrss.com</string>
+    <string formatted="false" name="title_author_email" translatable="false">pkrss.com@gmail.com</string>
 </resources>
