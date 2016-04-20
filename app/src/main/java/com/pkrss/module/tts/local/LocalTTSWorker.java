@@ -189,6 +189,8 @@ public final class LocalTTSWorker extends BaseTTS {
 
     @Override
     public void pause() {
+        super.pause();
+
         if(_speech == null)
             return;
         _speech.stop();
@@ -196,6 +198,8 @@ public final class LocalTTSWorker extends BaseTTS {
 
     @Override
     public void resume() {
+        super.resume();
+
         if(_speech == null)
             return;
 

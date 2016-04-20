@@ -13,15 +13,29 @@ public abstract class BaseTTS implements TTSModule.ITtsWorker {
 
     protected String mutteranceId;
 
+    private boolean isPlayCalled = false;
+
     SubManyOperHelper _subManyOperHelper = new SubManyOperHelper();
 
     @Override
     public void play(String content) {
         StatAnalytics.log(this.getClass().getName() + " prepare sayText");
 
+        isPlayCalled = true;
+
         _subManyOperHelper.start(content);
 
         _speakNext();
+    }
+
+    @Override
+    public void pause() {
+        isPlayCalled = false;
+    }
+
+    @Override
+    public void resume() {
+        isPlayCalled = true;
     }
 
     protected void _speakNext() {
@@ -33,12 +47,15 @@ public abstract class BaseTTS implements TTSModule.ITtsWorker {
 
     @Override
     public void stop() {
-        if(!_subManyOperHelper.isStarted())
-            return;
 
-        _subManyOperHelper.stop();
-        TTSModule.onCompleted_triggerEvent();
-        _child_onDoStop();
+        if(_subManyOperHelper.isStarted())
+            _subManyOperHelper.stop();
+
+        if(isPlayCalled) {
+            isPlayCalled = false;
+            _child_onDoStop();
+            TTSModule.onCompleted_triggerEvent();
+        }
     }
 
     protected abstract void _child_onDoSub(String text);
