@@ -1,13 +1,5 @@
 package com.pkrss.voicespeakking.handler;
 
-import android.content.Intent;
-import android.widget.RadioGroup;
-
-import com.pkrss.module.TTSModule;
-import com.pkrss.voicespeakking.R;
-import com.pkrss.voicespeakking.activity.TTSTabActivity;
-import com.pkrss.voicespeakking.activity.TTSTabOptionActivity;
-import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
 import com.pkrss.voicespeakking.model.TTSTabModel;
 
 /**

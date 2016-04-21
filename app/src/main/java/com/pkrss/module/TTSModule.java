@@ -57,12 +57,6 @@ public final class TTSModule {
         boolean isSpeaking();
 
         /**
-         * get playing string
-         * @return
-         */
-        String getPlayingString();
-
-        /**
          * pause speak
          */
         void pause();
@@ -74,9 +68,8 @@ public final class TTSModule {
 
         /**
          * play string
-         * @param content
          */
-        void play(String content);
+        void play();
 
         /**
          * 不实现此函数 用play实现
@@ -205,10 +198,10 @@ public final class TTSModule {
 
     /**
      * call by tts
-     * @param pos
+     * @param progressPercent
      */
-    public static void onProgress_triggerEvent(int pos){
-        PlayerBarModel.getInstance().setProgress(pos);
+    public static void onProgress_triggerEvent(int progressPercent){
+        PlayerBarModel.getInstance().setProgressPercent(progressPercent);
     }
 
     /**

@@ -2,22 +2,40 @@ package com.pkrss.voicespeakking.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.widget.SeekBar;
 
+import com.pkrss.module.tts.TTSSubPos;
 import com.pkrss.voicespeakking.BR;
+import com.pkrss.voicespeakking.databinding.SeekBarAdapter;
 
 /**
  * Created by liand on 2016/2/11.
  */
 public final class PlayerBarModel extends BaseObservable {
     private boolean playing = false;
-    private int progress;
-    private int max;
+    private SeekBar seekBarCtl;
+
+    private static PlayerBarModel instance;
 
     private PlayerBarModel(){
 
     }
 
-    private static PlayerBarModel instance;
+//    @Bindable
+    public int getProgressPercent() {
+        return TTSSubPos.getProgressPercent();
+    }
+
+    public void setProgressPercent(int progressPercent) {
+        int newProgressPercent = TTSSubPos.setProgressPercent(progressPercent);
+        if(newProgressPercent == progressPercent)
+            return;
+//        notifyPropertyChanged(BR.progressPercent);
+
+        if(seekBarCtl==null)
+            return;
+        seekBarCtl.setProgress(newProgressPercent);
+    }
 
     public static PlayerBarModel getInstance() {
         if(instance == null)
@@ -37,27 +55,11 @@ public final class PlayerBarModel extends BaseObservable {
         notifyPropertyChanged(BR.playing);
     }
 
-    @Bindable
-    public int getProgress() {
-        return progress;
-    }
+    public SeekBarAdapter.ISetHosterListener hosterListener = new SeekBarAdapter.ISetHosterListener(){
 
-    public void setProgress(int progress) {
-        if(this.progress == progress)
-            return;
-        this.progress = progress;
-        notifyPropertyChanged(BR.progress);
-    }
-
-    @Bindable
-    public int getMax() {
-        return max;
-    }
-
-    public void setMax(int max) {
-        if(this.max == max)
-            return;
-        this.max = max;
-        notifyPropertyChanged(BR.max);
-    }
+        @Override
+        public void setHoster(SeekBar seekBar) {
+            seekBarCtl = seekBar;
+        }
+    };
 }

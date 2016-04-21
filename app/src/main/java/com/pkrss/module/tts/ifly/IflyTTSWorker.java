@@ -16,6 +16,7 @@ import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
 import com.pkrss.common.helper.ManifestHelper;
 import com.pkrss.module.TTSModule;
+import com.pkrss.module.tts.TTSSubPos;
 import com.pkrss.voicespeakking.R;
 import com.pkrss.voicespeakking.common.ETTSEngineIdenty;
 import com.pkrss.voicespeakking.data.SpData;
@@ -48,7 +49,6 @@ public final class IflyTTSWorker implements TTSModule.ITtsWorker {
     private String[] mCloudVoicersValue ;
 
     private boolean inited = false;
-    private String textAfterInited = null;
 
     /**
      * 初始化监听。
@@ -65,11 +65,7 @@ public final class IflyTTSWorker implements TTSModule.ITtsWorker {
                 // 初始化成功，之后可以调用startSpeaking方法
                 // 注：有的开发者在onCreate方法中创建完合成对象之后马上就调用startSpeaking进行合成，
                 // 正确的做法是将onCreate中的startSpeaking调用移至这里
-                if(textAfterInited!=null && textAfterInited.length()>0) {
-                    String s = textAfterInited;
-                    textAfterInited = null;
-                    play(s);
-                }
+               play();
             }
         }
     };
@@ -179,14 +175,15 @@ public final class IflyTTSWorker implements TTSModule.ITtsWorker {
     }
 
     @Override
-    public void play(String text){
-
-        playingString = text;
+    public void play(){
 
         if(!inited) {
-            textAfterInited = text;
             return;
         }
+
+        String text = TTSSubPos.getText();
+        if(text == null || text.length()==0)
+            return;
 
         setParam();
         int code = mTts.startSpeaking(text, mTtsListener);
@@ -225,13 +222,6 @@ public final class IflyTTSWorker implements TTSModule.ITtsWorker {
     @Override
     public boolean isSpeaking(){
         return inited && mTts.isSpeaking();
-    }
-
-    private String playingString;
-
-    @Override
-    public String getPlayingString(){
-        return playingString;
     }
 
     /**

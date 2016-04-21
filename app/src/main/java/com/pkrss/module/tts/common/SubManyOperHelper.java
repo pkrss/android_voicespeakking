@@ -1,10 +1,11 @@
 package com.pkrss.module.tts.common;
 
+import com.pkrss.module.tts.TTSSubPos;
+
 public final class SubManyOperHelper {
 
     private Boolean mStartedStatus = false;
     private int mCurTextPos = -1;
-    private String mText = "";
     private String mCurTxt = "";
 
     private static final int LEN = 256;
@@ -13,7 +14,7 @@ public final class SubManyOperHelper {
 //	private TimerTask mTimerTask;
 
     public interface ICallback {
-        void onProgress(int pos);
+        void onProgressPercent(int progressPercent);
 
         void onStop();
 
@@ -34,10 +35,9 @@ public final class SubManyOperHelper {
 //		mPauseStatus = false;
 //	}
 
-    public boolean start(String fullText) {
+    public boolean start() {
 
         mCurTextPos = 0;
-        mText = fullText;
 
         mStartedStatus = true;
 
@@ -47,26 +47,28 @@ public final class SubManyOperHelper {
     public Boolean doNext() {
 
         do {
-            if (mText == null ||
-                    mText.length() == 0 ||
+            String text = TTSSubPos.getText();
+            if (text == null ||
+                    text.length() == 0 ||
                     mCurTextPos < 0 ||
-                    (mCurTextPos >= mText.length()))
+                    (mCurTextPos >= text.length()))
                 break;
 
             mCurTxt = "";
-            if (mText.length() > mCurTextPos + LEN) {
-                mCurTxt = mText.substring(mCurTextPos, mCurTextPos + LEN);
+            if (text.length() > mCurTextPos + LEN) {
+                mCurTxt = text.substring(mCurTextPos, mCurTextPos + LEN);
 
-                if (_callBack != null)
-                    _callBack.onProgress(mCurTextPos);
-
+                if (_callBack != null) {
+                    _callBack.onProgressPercent(getProgressPercent(mCurTextPos,text.length()));
+                }
                 mCurTextPos += LEN;
             } else {
-                mCurTxt = mText.substring(mCurTextPos);
-                mCurTextPos = mText.length();
+                mCurTxt = text.substring(mCurTextPos);
+                mCurTextPos = text.length();
 
-                if (_callBack != null)
-                    _callBack.onProgress(mCurTextPos - 1);
+                if (_callBack != null) {
+                    _callBack.onProgressPercent(getProgressPercent(mCurTextPos-1,text.length()));
+                }
             }
             if (mCurTxt == null || mCurTxt.length() == 0)
                 break;
@@ -83,34 +85,27 @@ public final class SubManyOperHelper {
         return false;
     }
 
-    public int getCurSpeakPos() {
-        if (mText == null || mText.length() == 0)
+    private static int getProgressPercent(int curPos,int totalLength){
+        int progressPercent = 0;
+        if(curPos>=totalLength)
+            return 100;
+        if(curPos<=0)
             return 0;
-        int len = mText.length();
+        return (curPos * 100) / totalLength;
+    }
+
+    public int getCurSpeakPos() {
+        String text = TTSSubPos.getText();
+        if (text == null || text.length() == 0)
+            return 0;
+        int len = text.length();
         if (len > 0)
             return mCurTextPos * 100 / len;
         return 0;
     }
 
-    public boolean setCurSpeakPos(int pos) {
-
-        if (mText == null || mText.length() == 0)
-            return false;
-
-        if (pos < 0 || pos > 100)
-            return false;
-
-        int len = mText.length();
-        mCurTextPos = pos * len / 100;
-
-        doNext();
-
-        return true;
-    }
-
     public void stop() {
 
-        mText = "";
         mCurTxt = "";
 
         mCurTextPos = -1;
@@ -124,10 +119,6 @@ public final class SubManyOperHelper {
             if (_callBack != null)
                 _callBack.onStop();
         }
-    }
-
-    public String getText() {
-        return mText;
     }
 
     public boolean isStarted(){

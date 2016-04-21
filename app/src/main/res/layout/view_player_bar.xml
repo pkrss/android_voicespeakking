@@ -26,8 +26,10 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:indeterminate="false"
-            android:max="@{playerBarModel.max}"
-            android:progress="@{playerBarModel.progress}"/>
+            android:max="100"
+            android:setHosterListener="@{playerBarModel.hosterListener}"
+            android:setOnSeekBarChangeListener="@{playerBarHandler.seekBarChangeListener}"
+            android:progress="@{playerBarModel.progressPercent}"/>
 
         <ImageButton
             android:layout_width="34dp"

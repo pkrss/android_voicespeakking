@@ -3,9 +3,12 @@ package com.pkrss.voicespeakking.handler;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.SeekBar;
 
 import com.pkrss.module.TTSModule;
+import com.pkrss.module.tts.TTSSubPos;
 import com.pkrss.voicespeakking.R;
+import com.pkrss.voicespeakking.databinding.SeekBarAdapter;
 import com.pkrss.voicespeakking.model.MainModel;
 
 /**
@@ -18,8 +21,6 @@ public final class PlayerBarHandler {
     public PlayerBarHandler(MainModel mainModel){
         this.mainModel = mainModel;
     }
-
-    private TTSModule ttsModule;
 
     private DrawerLayout drawer;
 
@@ -36,29 +37,38 @@ public final class PlayerBarHandler {
     }
 
     public void clickPlayBtn(View view){
-        if(ttsModule == null){
-            ttsModule = TTSModule.getInstance();
-//            ttsHelper.play();
-            return;
-        }
-
-        TTSModule.ITtsWorker ttsWorker = ttsModule.getCurWorker();
-        if(ttsWorker == null)
-            return;
-
-        String content = mainModel.getContentModel().getContent();
-        String speakingString = ttsWorker.getPlayingString();
-        if(content == speakingString || content.equals(speakingString)) {
-            if (ttsWorker.isSpeaking()) {
-                ttsWorker.pause();
-                mainModel.getPlayerBarModel().setPlaying(false);
-            } else {
-                ttsWorker.resume();
-                mainModel.getPlayerBarModel().setPlaying(true);
-            }
-        }else{
-            ttsWorker.play(content);
-            mainModel.getPlayerBarModel().setPlaying(true);
-        }
+        boolean playing = TTSSubPos.play(mainModel.getContentModel().getContent(), 0);
+        mainModel.getPlayerBarModel().setPlaying(playing);
     }
+
+    public SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener(){
+
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            if(!fromUser)
+                return;
+
+            TTSModule.ITtsWorker ttsWorker = TTSModule.getInstance().getCurWorker();
+            if(ttsWorker == null)
+                return;
+
+            if(TTSSubPos.getText().length()==0){
+                boolean playing = TTSSubPos.play(mainModel.getContentModel().getContent(), 0);
+                mainModel.getPlayerBarModel().setPlaying(playing);
+            }else {
+                boolean playing = TTSSubPos.playProgress(progress);
+                mainModel.getPlayerBarModel().setPlaying(playing);
+            }
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
 }

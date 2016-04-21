@@ -18,12 +18,12 @@ public abstract class BaseTTS implements TTSModule.ITtsWorker {
     SubManyOperHelper _subManyOperHelper = new SubManyOperHelper();
 
     @Override
-    public void play(String content) {
+    public void play() {
         StatAnalytics.log(this.getClass().getName() + " prepare sayText");
 
         isPlayCalled = true;
 
-        _subManyOperHelper.start(content);
+        _subManyOperHelper.start();
 
         _speakNext();
     }
@@ -66,10 +66,8 @@ public abstract class BaseTTS implements TTSModule.ITtsWorker {
     SubManyOperHelper.ICallback _subManyOperHelperCallBack = new SubManyOperHelper.ICallback() {
 
         @Override
-        public void onProgress(int pos) {
-             pos += _subManyOperHelper.getCurSpeakPos();
-
-            TTSModule.onProgress_triggerEvent(pos);
+        public void onProgressPercent(int progressPercent) {
+            TTSModule.onProgress_triggerEvent(progressPercent);
         }
 
         @Override
@@ -106,10 +104,5 @@ public abstract class BaseTTS implements TTSModule.ITtsWorker {
         }
 
         return true;
-    }
-
-    @Override
-    public String getPlayingString() {
-        return _subManyOperHelper.getText();
     }
 }
