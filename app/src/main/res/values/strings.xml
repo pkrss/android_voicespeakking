@@ -25,12 +25,18 @@
 
     <string name="language">Language</string>
 
+    <string name="text_donate">Donate</string>
+    <string name="text_rate_app">Rate for this app</string>
+
     <string name="text_downloading">Downloading</string>
     <string name="text_getdownloadlink">Getting download link</string>
+
+    <string name="text_opensource">Open source code</string>
 
     <string name="error_not_found_tts_data">Not found voice data in your system</string>
 
     <string name="title_activity_ttstab">1. TTS selector</string>
     <string name="title_activity_ttsoption">2. TTS option</string>
     <string name="title_activity_nav">NavActivity</string>
+    <string name="title_activity_about_us">About us</string>
 </resources>

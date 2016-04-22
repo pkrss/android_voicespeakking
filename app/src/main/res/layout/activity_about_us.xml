@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="aboutUsHandler"
+            type="com.pkrss.voicespeakking.handler.AboutUsHandler" />
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context="com.pkrss.voicespeakking.activity.AboutUsActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_author_email"
+                android:onClick="${aboutUsHandler.clickEmailMe}"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_donate"
+                android:onClick="${aboutUsHandler.clickDonate}"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_rate_app"
+                android:onClick="${aboutUsHandler.clickRateApp}"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/feedback"
+                android:onClick="${aboutUsHandler.clickFeedback}"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_opensource"
+                android:onClick="${aboutUsHandler.clickOpensource}"/>
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

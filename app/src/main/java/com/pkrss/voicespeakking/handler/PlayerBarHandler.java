@@ -53,7 +53,7 @@ public final class PlayerBarHandler {
                 return;
 
             if(TTSSubPos.getText().length()==0){
-                boolean playing = TTSSubPos.play(mainModel.getContentModel().getContent(), 0);
+                boolean playing = TTSSubPos.play(mainModel.getContentModel().getContent(), progress);
                 mainModel.getPlayerBarModel().setPlaying(playing);
             }else {
                 boolean playing = TTSSubPos.playProgress(progress);

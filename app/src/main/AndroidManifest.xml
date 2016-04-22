@@ -29,14 +29,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.TTSTabActivity"
             android:label="@string/back"
-            android:theme="@style/BackActivityTheme"></activity>
+            android:theme="@style/BackActivityTheme" />
+
         <activity
             android:name=".activity.TTSTabOptionActivity"
             android:label="@string/back"
             android:theme="@style/BackActivityTheme" />
+
+        <activity
+            android:name=".activity.AboutUsActivity"
+            android:label="@string/title_activity_about_us"
+            android:theme="@style/BackActivityTheme"/>
+
         <activity android:name=".activity.CustomFeedbackActivity" />
 
         <!-- 移动统计分析 -->
@@ -46,7 +54,6 @@
         <meta-data
             android:name="IFLYTEK_CHANNEL"
             android:value="Android_Default" />
-
     </application>
 
 </manifest>

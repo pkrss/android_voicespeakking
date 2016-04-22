@@ -76,6 +76,10 @@ public final class TTSSubPos {
     public static boolean playProgress(int percentProgress){
         boolean isPlaying = false;
 
+        TTSModule.ITtsWorker ttsWorker = TTSModule.getInstance().getCurWorker();
+        if(ttsWorker == null)
+            return false;
+
         String speakingString = TTSSubPos.text;
 
         if(speakingString.length()==0)
@@ -88,6 +92,9 @@ public final class TTSSubPos {
         if(skipedPos>=length) {
             return false;
         }
+
+        ttsWorker.stop();
+        ttsWorker.play();
 
         return isPlaying;
     }

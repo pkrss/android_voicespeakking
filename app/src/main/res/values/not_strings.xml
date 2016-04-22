@@ -88,4 +88,7 @@
 
     <string formatted="false" name="title_author" translatable="false">pkrss.com</string>
     <string formatted="false" name="title_author_email" translatable="false">pkrss.com@gmail.com</string>
+
+    <string formatted="false" name="url_author_donate" translatable="false">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=NYUVBWWNU936N</string>
+    <string formatted="false" name="url_opensource" translatable="false">https://github.com/pkrss/android_voicespeakking</string>
 </resources>

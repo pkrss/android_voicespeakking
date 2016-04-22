@@ -50,9 +50,15 @@ public final class SubManyOperHelper {
             String text = TTSSubPos.getText();
             if (text == null ||
                     text.length() == 0 ||
-                    mCurTextPos < 0 ||
-                    (mCurTextPos >= text.length()))
+                    mCurTextPos < 0)
                 break;
+
+            if (mCurTextPos >= text.length()) {
+                if (_callBack != null) {
+                    _callBack.onProgressPercent(100);
+                }
+                break;
+            }
 
             mCurTxt = "";
             if (text.length() > mCurTextPos + LEN) {
@@ -64,11 +70,12 @@ public final class SubManyOperHelper {
                 mCurTextPos += LEN;
             } else {
                 mCurTxt = text.substring(mCurTextPos);
-                mCurTextPos = text.length();
 
                 if (_callBack != null) {
                     _callBack.onProgressPercent(getProgressPercent(mCurTextPos-1,text.length()));
                 }
+
+                mCurTextPos = text.length();
             }
             if (mCurTxt == null || mCurTxt.length() == 0)
                 break;
