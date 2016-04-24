@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity
             this.startActivity(new Intent(this, TTSTabActivity.class));
         }else if (id == R.id.nav_aboutus) {
             this.startActivity(new Intent(this, AboutUsActivity.class));
+        }else if (id == R.id.nav_history) {
+            this.startActivity(new Intent(this, TTSHistoryActivity.class));
         }
 
 //        else if (id == R.id.nav_camera) {

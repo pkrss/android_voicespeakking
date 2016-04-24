@@ -20,6 +20,8 @@
 
     <string name="language">Language</string>
 
+    <string name="loading">Loading...</string>
+
     <string name="text_donate">Donate</string>
     <string name="text_rate_app">Rate for this app</string>
 

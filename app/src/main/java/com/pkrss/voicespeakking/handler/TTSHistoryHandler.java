@@ -1,22 +1,82 @@
 package com.pkrss.voicespeakking.handler;
 
+import android.animation.Animator;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
+import android.widget.ListView;
+
+import com.pkrss.voicespeakking.db.model.SpeakItem;
+import com.pkrss.voicespeakking.db.util.DbCore;
+import com.pkrss.voicespeakking.model.TTSHistoryModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class TTSHistoryHandler {
+
+    private TTSHistoryModel ttsHistoryModel;
+    private Handler loadMoreResponseHandler;
+
+    public TTSHistoryHandler(TTSHistoryModel ttsHistoryModel){
+        this.ttsHistoryModel = ttsHistoryModel;
+        loadMoreResponseHandler = new Handler();
+
+    }
+
+    private Runnable _loadMoreRunable = new Runnable() {
+        @Override
+        public void run() {
+            int pageIndex = ttsHistoryModel.getCurPage();
+            ttsHistoryModel.setCurPage(pageIndex+1);
+
+            List<SpeakItem> speakItemList = DbCore.getDaoSession().getSpeakItemDao().queryBuilder().limit(TTSHistoryModel.pageSize).offset(pageIndex * TTSHistoryModel.pageSize).list();
+            loadMoreResponseHandler.post(new MyLoadMoreResponseRunnable(speakItemList));
+
+        }
+    };
+
+    private final class MyLoadMoreResponseRunnable implements Runnable{
+
+        List<SpeakItem> speakItemList;
+
+        public MyLoadMoreResponseRunnable(List<SpeakItem> speakItemList){
+            this.speakItemList = speakItemList;
+        }
+
+        @Override
+        public void run() {
+
+            if(ttsHistoryModel.getLoadMoreCtl()!=null)
+                ttsHistoryModel.getLoadMoreCtl().setVisibility(View.GONE);
+
+            if(speakItemList==null)
+                return;
+
+            ttsHistoryModel.addAll(speakItemList);
+
+            // data is not enought
+            if(speakItemList.size()==TTSHistoryModel.pageSize){
+                if(ttsHistoryModel.getSwipeRefreshLayout()!=null)
+                    ttsHistoryModel.getSwipeRefreshLayout().setRefreshing(false);
+            }
+        }
+    };
+
+    private void _startLoadMorePageThread(){
+        new Thread(_loadMoreRunable).start();
+    }
 
     public SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener(){
 
         @Override
         public void onRefresh() {
-//            tv.setText("正在刷新");
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-//                    tv.setText("刷新完成");
-//                    swipeRefreshLayout.setRefreshing(false);
-                }
-            }, 6000);
+            // show loading control
+            if(ttsHistoryModel.getLoadMoreCtl()!=null)
+                ttsHistoryModel.getLoadMoreCtl().setVisibility(View.VISIBLE);
+
+            // start new thread to work
+            _startLoadMorePageThread();
         }
     };
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="ttsHistoryItemModel" type="com.pkrss.voicespeakking.model.TTSHistoryItemModel"/>
+        <variable name="ttsHistoryItemHandler" type="com.pkrss.voicespeakking.handler.TTSHistoryItemHandler"/>
+    </data>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+
+        <ImageButton
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:onClick="@{ttsHistoryItemHandler.clickDelete}"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:onClick="@{ttsHistoryItemHandler.clickItem}">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:text="@{ttsHistoryItemModel.brief}"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:text="@{ttsHistoryItemModel.line2}" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
