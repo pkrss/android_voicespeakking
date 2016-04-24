@@ -39,4 +39,5 @@
     <string name="title_activity_ttsoption">2. TTS option</string>
     <string name="title_activity_nav">NavActivity</string>
     <string name="title_activity_about_us">About us</string>
+    <string name="title_activity_history">History</string>
 </resources>

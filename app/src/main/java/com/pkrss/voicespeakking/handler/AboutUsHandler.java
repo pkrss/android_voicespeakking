@@ -1,12 +1,10 @@
 package com.pkrss.voicespeakking.handler;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
 
 import com.pkrss.common.helper.UtilsHelper;
 import com.pkrss.voicespeakking.R;
-import com.pkrss.voicespeakking.activity.AboutUsActivity;
 import com.pkrss.voicespeakking.activity.CustomFeedbackActivity;
 
 /**

@@ -22,6 +22,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
+            android:configChanges="screenSize|orientation|keyboard|keyboardHidden|navigation|layoutDirection|screenLayout"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,23 +30,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.TTSTabActivity"
             android:label="@string/back"
             android:theme="@style/BackActivityTheme" />
-
         <activity
             android:name=".activity.TTSTabOptionActivity"
             android:label="@string/back"
             android:theme="@style/BackActivityTheme" />
-
         <activity
             android:name=".activity.AboutUsActivity"
             android:label="@string/title_activity_about_us"
-            android:theme="@style/BackActivityTheme"/>
-
+            android:theme="@style/BackActivityTheme" />
         <activity android:name=".activity.CustomFeedbackActivity" />
+
+        <activity android:name=".activity.TTSHistoryActivity"
+            android:label="@string/title_activity_history"
+            android:theme="@style/BackActivityTheme"/>
 
         <!-- 移动统计分析 -->
         <meta-data

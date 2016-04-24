@@ -23,31 +23,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/title_author_email"
-                android:onClick="${aboutUsHandler.clickEmailMe}"/>
+                android:onClick="@{aboutUsHandler.clickEmailMe}"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/text_donate"
-                android:onClick="${aboutUsHandler.clickDonate}"/>
+                android:onClick="@{aboutUsHandler.clickDonate}"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/text_rate_app"
-                android:onClick="${aboutUsHandler.clickRateApp}"/>
+                android:onClick="@{aboutUsHandler.clickRateApp}"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/feedback"
-                android:onClick="${aboutUsHandler.clickFeedback}"/>
+                android:onClick="@{aboutUsHandler.clickFeedback}"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/text_opensource"
-                android:onClick="${aboutUsHandler.clickOpensource}"/>
+                android:onClick="@{aboutUsHandler.clickOpensource}"/>
 
         </LinearLayout>
     </ScrollView>

@@ -2,11 +2,12 @@ package com.pkrss.voicespeakking.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.view.View;
 import android.widget.SeekBar;
 
 import com.pkrss.module.tts.TTSSubPos;
 import com.pkrss.voicespeakking.BR;
-import com.pkrss.voicespeakking.databinding.SeekBarAdapter;
+import com.pkrss.voicespeakking.databinding.ViewAdapter;
 
 /**
  * Created by liand on 2016/2/11.
@@ -55,11 +56,11 @@ public final class PlayerBarModel extends BaseObservable {
         notifyPropertyChanged(BR.playing);
     }
 
-    public SeekBarAdapter.ISetHosterListener hosterListener = new SeekBarAdapter.ISetHosterListener(){
+    public ViewAdapter.ISetHosterListener hosterListener = new ViewAdapter.ISetHosterListener(){
 
         @Override
-        public void setHoster(SeekBar seekBar) {
-            seekBarCtl = seekBar;
+        public void setHoster(View view) {
+            seekBarCtl = (SeekBar) view;
         }
     };
 }
