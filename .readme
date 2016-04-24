@@ -1,0 +1,24 @@
+
+== change log ==
+1.4/24/2016 first time release
+  have simple tts speak function.
+
+== author ==
+pkrss.com@gmail.com
+
+== summary ==
+tts speak text tool
+
+== description ==
+
+1. tts speak text tool
+2. have 3 tts engine. local、pkrss(internet by microsoft tts)、ifly(chinese).
+3. can change speak text in left panel,click edit.
+4. have speak progress(no good for local and pkrss engine)
+5. tts from pkrss web voice browser project, open source,and will design for simple and wonderful.
+6. if your have some idea,please feedback us.
+
+
+== privacy ==
+for google play:
+http://cdn.pkrss.com/p/map/index/privacy/
