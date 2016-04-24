@@ -9,7 +9,7 @@ import com.pkrss.voicespeakking.BR;
  * Created by liand on 2016/2/11.
  */
 public final class ContentModel extends BaseObservable {
-    private String content = "菜单布局，main_menu.xml，三种菜单都是用这个菜单布局填充的";
+    private String content = "This is sample, you can replace this text in left panel,and click edit menu.";
 
     @Bindable
     public String getContent() {
