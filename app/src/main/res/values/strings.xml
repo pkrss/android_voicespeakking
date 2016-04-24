@@ -6,16 +6,11 @@
 
     <string name="action_settings">Settings</string>
 
-    <string name="message_image_desc">Message Image</string>
-    <string name="common_send">Send</string>
-    <string name="common_input_text">Please input text here...</string>
-    <string name="feedback">Feedback</string>
     <string name="speak">Speak</string>
     <string name="back">Back</string>
 
     <string name="ttstab_engine_title">Please select one voice engine:</string>
     <string name="local">Local</string>
-    <string name="title_activity_test_tab">TestTabActivity</string>
 
     <string name="edit">Edit</string>
     <string name="save">Save</string>

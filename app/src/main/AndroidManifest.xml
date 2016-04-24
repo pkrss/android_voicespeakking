@@ -42,7 +42,6 @@
             android:name=".activity.AboutUsActivity"
             android:label="@string/title_activity_about_us"
             android:theme="@style/BackActivityTheme" />
-        <activity android:name=".activity.CustomFeedbackActivity" />
 
         <activity android:name=".activity.TTSHistoryActivity"
             android:label="@string/title_activity_history"

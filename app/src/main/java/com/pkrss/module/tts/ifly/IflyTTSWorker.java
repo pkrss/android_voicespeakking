@@ -95,15 +95,14 @@ public final class IflyTTSWorker implements TTSModule.ITtsWorker {
                                      String info) {
             // 合成进度
             mPercentForBuffering = percent;
-            showTip(String.format(context.getString(R.string.tts_toast_format),
-                    mPercentForBuffering, mPercentForPlaying));
+//            showTip(String.format(context.getString(R.string.tts_toast_format), mPercentForBuffering, mPercentForPlaying));
         }
 
         @Override
         public void onSpeakProgress(int percent, int beginPos, int endPos) {
             // 播放进度
             mPercentForPlaying = percent;
-            showTip(String.format(context.getString(R.string.tts_toast_format),  mPercentForBuffering, mPercentForPlaying));
+//            showTip(String.format(context.getString(R.string.tts_toast_format),  mPercentForBuffering, mPercentForPlaying));
 
             TTSModule.onProgress_triggerEvent(mPercentForPlaying);
         }
