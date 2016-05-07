@@ -23,9 +23,11 @@ public final class TTSHistoryActivity extends BaseBackActivity {
         ActivityTtshistoryBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_ttshistory);
 
         TTSHistoryModel ttsHistoryModel = new TTSHistoryModel();
-        TTSHistoryHandler ttsTabHandler = new TTSHistoryHandler(ttsHistoryModel);
+        TTSHistoryHandler ttsHistoryHandler = new TTSHistoryHandler(ttsHistoryModel);
         binding.setTtsHistoryModel(ttsHistoryModel);
-        binding.setTtsHistoryHandler(ttsTabHandler);
+        binding.setTtsHistoryHandler(ttsHistoryHandler);
 
+        // default is call refresh
+        ttsHistoryHandler.onRefreshListener.onRefresh();
     }
 }

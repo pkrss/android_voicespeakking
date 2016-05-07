@@ -1,12 +1,10 @@
 package com.pkrss.voicespeakking.handler;
 
-import com.pkrss.voicespeakking.db.dao.RemoteCacheDataDao;
 import com.pkrss.voicespeakking.db.dao.SpeakItemDao;
 import com.pkrss.voicespeakking.db.model.SpeakItem;
 import com.pkrss.voicespeakking.db.util.DbCore;
 
 import java.util.Date;
-import java.util.List;
 
 //
 //import android.view.MenuInflater;
@@ -25,7 +23,7 @@ public final class ContentHandler {
             return;
 
         SpeakItemDao speakItemDao = DbCore.getDaoSession().getSpeakItemDao();
-        SpeakItem speakItem = speakItemDao.queryBuilder().where(RemoteCacheDataDao.Properties.Content.eq(content)).unique();
+        SpeakItem speakItem = speakItemDao.queryBuilder().where(SpeakItemDao.Properties.Content.eq(content)).unique();
         Date now = new Date();
         if(speakItem==null){
             speakItem = new SpeakItem();

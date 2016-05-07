@@ -25,6 +25,7 @@ public final class TTSHistoryModel extends BaseObservable {
 
 //    private List<SpeakItem> allSpeakItem = new ArrayList<SpeakItem>();
     private TTSHistoryAdapter ttsHistoryAdapter;
+    private List<SpeakItem> speakItemList;
 
     private int curPage = 0;
 
@@ -53,7 +54,8 @@ public final class TTSHistoryModel extends BaseObservable {
                 return;
 
             if(ttsHistoryAdapter == null){
-                ttsHistoryAdapter = new TTSHistoryAdapter(view.getContext());
+                speakItemList = new ArrayList<SpeakItem>();
+                ttsHistoryAdapter = new TTSHistoryAdapter(view.getContext(), speakItemList);
             }
             listViewCtl.setAdapter(ttsHistoryAdapter);
         }
@@ -79,8 +81,10 @@ public final class TTSHistoryModel extends BaseObservable {
     }
 
     public void addAll(List<SpeakItem> items){
-        ttsHistoryAdapter.addAll(items);
-
+        if(items==null || items.size()==0)
+            return;
+        speakItemList.addAll(items);
+        ttsHistoryAdapter.notifyDataSetChanged();
         // notify
         // ...
 //        if(ttsHistoryAdapter!=null)

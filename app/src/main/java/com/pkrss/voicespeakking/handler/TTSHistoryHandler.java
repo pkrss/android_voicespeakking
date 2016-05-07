@@ -76,6 +76,9 @@ public final class TTSHistoryHandler {
             if(ttsHistoryModel.getLoadMoreCtl()!=null)
                 ttsHistoryModel.getLoadMoreCtl().setVisibility(View.VISIBLE);
 
+            if(ttsHistoryModel.getSwipeRefreshLayout()!=null)
+                ttsHistoryModel.getSwipeRefreshLayout().setRefreshing(true);
+
             // start new thread to work
             _startLoadMorePageThread();
         }
