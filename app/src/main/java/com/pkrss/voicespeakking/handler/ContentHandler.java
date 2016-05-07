@@ -1,4 +1,13 @@
-//package com.pkrss.voicespeakking.handler;
+package com.pkrss.voicespeakking.handler;
+
+import com.pkrss.voicespeakking.db.dao.RemoteCacheDataDao;
+import com.pkrss.voicespeakking.db.dao.SpeakItemDao;
+import com.pkrss.voicespeakking.db.model.SpeakItem;
+import com.pkrss.voicespeakking.db.util.DbCore;
+
+import java.util.Date;
+import java.util.List;
+
 //
 //import android.view.MenuInflater;
 //import android.view.MenuItem;
@@ -8,8 +17,30 @@
 //import com.pkrss.voicespeakking.R;
 //import com.pkrss.voicespeakking.model.MainModel;
 //
-//public final class ContentHandler {
+public final class ContentHandler {
 //    private MainModel mainModel;
+
+    public static void checkContentAndSaveToDb(String content){
+        if(content == null || content.length()==0)
+            return;
+
+        SpeakItemDao speakItemDao = DbCore.getDaoSession().getSpeakItemDao();
+        SpeakItem speakItem = speakItemDao.queryBuilder().where(RemoteCacheDataDao.Properties.Content.eq(content)).unique();
+        Date now = new Date();
+        if(speakItem==null){
+            speakItem = new SpeakItem();
+            speakItem.setLastPos(0);
+            speakItem.setBrief(content.length()>10 ? content.substring(0,10) : content);
+            speakItem.setContent(content);
+            speakItem.setCreateTime(now);
+            speakItem.setUpdateTime(now);
+            speakItemDao.insert(speakItem);
+        }else{
+            speakItem.setUpdateTime(now);
+            speakItemDao.update(speakItem);
+        }
+    }
+
 //
 //    public ContentHandler(MainModel mainModel){
 //        this.mainModel = mainModel;
@@ -47,4 +78,4 @@
 //            return false;
 //        }
 //    };
-//}
+}

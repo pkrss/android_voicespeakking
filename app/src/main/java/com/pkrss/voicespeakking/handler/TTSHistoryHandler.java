@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ListView;
 
+import com.pkrss.voicespeakking.db.dao.SpeakItemDao;
 import com.pkrss.voicespeakking.db.model.SpeakItem;
 import com.pkrss.voicespeakking.db.util.DbCore;
 import com.pkrss.voicespeakking.model.TTSHistoryModel;
@@ -30,7 +31,7 @@ public final class TTSHistoryHandler {
             int pageIndex = ttsHistoryModel.getCurPage();
             ttsHistoryModel.setCurPage(pageIndex+1);
 
-            List<SpeakItem> speakItemList = DbCore.getDaoSession().getSpeakItemDao().queryBuilder().limit(TTSHistoryModel.pageSize).offset(pageIndex * TTSHistoryModel.pageSize).list();
+            List<SpeakItem> speakItemList = DbCore.getDaoSession().getSpeakItemDao().queryBuilder().orderDesc(SpeakItemDao.Properties.UpdateTime).limit(TTSHistoryModel.pageSize).offset(pageIndex * TTSHistoryModel.pageSize).list();
             loadMoreResponseHandler.post(new MyLoadMoreResponseRunnable(speakItemList));
 
         }

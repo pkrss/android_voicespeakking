@@ -34,7 +34,7 @@ public final class TTSHistoryModel extends BaseObservable {
         return swipeRefreshLayout;
     }
 
-    public ViewAdapter.ISetHosterListener setSwipeRefreshLayoutHosterListener = new ViewAdapter.ISetHosterListener(){
+    public ViewAdapter.ISetHosterListener swipeRefreshLayoutHosterListener = new ViewAdapter.ISetHosterListener(){
         @Override
         public void setHoster(View view) {
             swipeRefreshLayout = (SwipeRefreshLayout) view;
@@ -45,7 +45,7 @@ public final class TTSHistoryModel extends BaseObservable {
         return listViewCtl;
     }
 
-    public ViewAdapter.ISetHosterListener setListViewHosterListener = new ViewAdapter.ISetHosterListener(){
+    public ViewAdapter.ISetHosterListener listViewHosterListener = new ViewAdapter.ISetHosterListener(){
         @Override
         public void setHoster(View view) {
             listViewCtl = (ListView) view;
@@ -63,7 +63,7 @@ public final class TTSHistoryModel extends BaseObservable {
         return loadMoreCtl;
     }
 
-    public ViewAdapter.ISetHosterListener setLoadMoreCtlHosterListener = new ViewAdapter.ISetHosterListener(){
+    public ViewAdapter.ISetHosterListener loadMoreCtlHosterListener = new ViewAdapter.ISetHosterListener(){
         @Override
         public void setHoster(View view) {
             loadMoreCtl = view;
