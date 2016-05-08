@@ -12,6 +12,17 @@ import com.pkrss.voicespeakking.handler.ContentHandler;
 public final class ContentModel extends BaseObservable {
     private String content = "This is sample, you can replace this text in left panel,and click edit menu.";
 
+    private ContentModel(){
+
+    }
+
+    private static ContentModel contentModel;
+    public static ContentModel getInstance(){
+        if(contentModel == null)
+            contentModel = new ContentModel();
+        return contentModel;
+    }
+
     @Bindable
     public String getContent() {
         return content;

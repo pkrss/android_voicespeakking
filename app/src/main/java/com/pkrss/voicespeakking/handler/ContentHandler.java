@@ -1,7 +1,10 @@
 package com.pkrss.voicespeakking.handler;
 
+import com.pkrss.voicespeakking.common.TTSConstants;
+import com.pkrss.voicespeakking.db.dao.SpeakItemContentDao;
 import com.pkrss.voicespeakking.db.dao.SpeakItemDao;
 import com.pkrss.voicespeakking.db.model.SpeakItem;
+import com.pkrss.voicespeakking.db.model.SpeakItemContent;
 import com.pkrss.voicespeakking.db.util.DbCore;
 
 import java.util.Date;
@@ -23,19 +26,30 @@ public final class ContentHandler {
             return;
 
         SpeakItemDao speakItemDao = DbCore.getDaoSession().getSpeakItemDao();
-        SpeakItem speakItem = speakItemDao.queryBuilder().where(SpeakItemDao.Properties.Content.eq(content)).unique();
+        SpeakItemContent speakItemContent = DbCore.getDaoSession().getSpeakItemContentDao().queryBuilder().where(SpeakItemContentDao.Properties.Content.eq(content)).unique();
         Date now = new Date();
-        if(speakItem==null){
-            speakItem = new SpeakItem();
+        if(speakItemContent==null){
+            SpeakItem speakItem = new SpeakItem();
             speakItem.setLastPos(0);
-            speakItem.setBrief(content.length()>10 ? content.substring(0,10) : content);
-            speakItem.setContent(content);
+            speakItem.setBrief(content.length()>TTSConstants.HISTORY_BIREF_LENGTH ? content.substring(0, TTSConstants.HISTORY_BIREF_LENGTH) : content);
+
             speakItem.setCreateTime(now);
             speakItem.setUpdateTime(now);
-            speakItemDao.insert(speakItem);
+
+
+            speakItemContent = new SpeakItemContent();
+            speakItemContent.setId(speakItemDao.insert(speakItem));
+
+            if(speakItemContent.getId()>0) {
+                speakItemContent.setContent(content);
+                DbCore.getDaoSession().getSpeakItemContentDao().insert(speakItemContent);
+            }
         }else{
-            speakItem.setUpdateTime(now);
-            speakItemDao.update(speakItem);
+            SpeakItem speakItem = DbCore.getDaoSession().getSpeakItemDao().load(speakItemContent.getId());
+            if(speakItem!=null) {
+                speakItem.setUpdateTime(now);
+                speakItemDao.update(speakItem);
+            }
         }
     }
 

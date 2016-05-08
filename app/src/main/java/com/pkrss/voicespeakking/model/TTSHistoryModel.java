@@ -1,5 +1,6 @@
 package com.pkrss.voicespeakking.model;
 
+import android.app.Activity;
 import android.databinding.BaseObservable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -17,19 +18,24 @@ import java.util.List;
  */
 public final class TTSHistoryModel extends BaseObservable {
 
+    private Activity activity;
+
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    private View loadMoreCtl;
+//    private View loadMoreCtl;
 
     private ListView listViewCtl;
 
 //    private List<SpeakItem> allSpeakItem = new ArrayList<SpeakItem>();
     private TTSHistoryAdapter ttsHistoryAdapter;
-    private List<SpeakItem> speakItemList;
 
     private int curPage = 0;
 
     public static final int pageSize = 20;
+
+    public TTSHistoryModel(Activity activity){
+        this.activity = activity;
+    }
 
     public SwipeRefreshLayout getSwipeRefreshLayout() {
         return swipeRefreshLayout;
@@ -54,23 +60,22 @@ public final class TTSHistoryModel extends BaseObservable {
                 return;
 
             if(ttsHistoryAdapter == null){
-                speakItemList = new ArrayList<SpeakItem>();
-                ttsHistoryAdapter = new TTSHistoryAdapter(view.getContext(), speakItemList);
+                ttsHistoryAdapter = new TTSHistoryAdapter(activity);
             }
             listViewCtl.setAdapter(ttsHistoryAdapter);
         }
     };
 
-    public View getLoadMoreCtl() {
-        return loadMoreCtl;
-    }
-
-    public ViewAdapter.ISetHosterListener loadMoreCtlHosterListener = new ViewAdapter.ISetHosterListener(){
-        @Override
-        public void setHoster(View view) {
-            loadMoreCtl = view;
-        }
-    };
+//    public View getLoadMoreCtl() {
+//        return loadMoreCtl;
+//    }
+//
+//    public ViewAdapter.ISetHosterListener loadMoreCtlHosterListener = new ViewAdapter.ISetHosterListener(){
+//        @Override
+//        public void setHoster(View view) {
+//            loadMoreCtl = view;
+//        }
+//    };
 
     public int getCurPage() {
         return curPage;
@@ -83,11 +88,6 @@ public final class TTSHistoryModel extends BaseObservable {
     public void addAll(List<SpeakItem> items){
         if(items==null || items.size()==0)
             return;
-        speakItemList.addAll(items);
-        ttsHistoryAdapter.notifyDataSetChanged();
-        // notify
-        // ...
-//        if(ttsHistoryAdapter!=null)
-//            ttsHistoryAdapter.notifyDataSetChanged();
+        ttsHistoryAdapter.addAll(items);
     }
 }

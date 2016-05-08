@@ -1,5 +1,6 @@
 package com.pkrss.voicespeakking.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
@@ -20,54 +21,37 @@ import java.util.List;
 /**
  * Created by liand on 2016/2/13.
  */
-public final class TTSHistoryAdapter extends BaseAdapter {
+public final class TTSHistoryAdapter extends ArrayAdapter<SpeakItem> {
 
     private final LayoutInflater mInflater;
+    private Activity activity;
 
-    private List<SpeakItem> speakItemList;
-
-    public TTSHistoryAdapter(Context context, List<SpeakItem> speakItemList) {
-        mInflater = LayoutInflater.from(context);
-        this.speakItemList = speakItemList;
-    }
-
-    @Override
-    public int getCount(){
-        return speakItemList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return speakItemList.get(position);
+    public TTSHistoryAdapter(Activity activity) {
+        super(activity,  R.layout.child_ttshistory_item, 0);
+        this.activity = activity;
+        mInflater = LayoutInflater.from(activity);
     }
 
     @Override
     public long getItemId(int position) {
-        return speakItemList.get(position).getId();
+        return getItem(position).getId();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view;
-        TextView text;
-        SpeakItem speakItem = null;
 
         if (convertView == null) {
             ChildTtshistoryItemBinding binding = DataBindingUtil.inflate(mInflater, R.layout.child_ttshistory_item, parent, false);
 
-            speakItem = speakItemList.get(position);
-            TTSHistoryItemModel ttsHistoryItemModel = new TTSHistoryItemModel(speakItem);
+            SpeakItem speakItem = getItem(position);
+            TTSHistoryItemModel ttsHistoryItemModel = new TTSHistoryItemModel(activity, speakItem);
             TTSHistoryItemHandler ttsHistoryItemHandler = new TTSHistoryItemHandler(ttsHistoryItemModel);
             binding.setTtsHistoryItemModel(ttsHistoryItemModel);
             binding.setTtsHistoryItemHandler(ttsHistoryItemHandler);
 
-            view = binding.getRoot();
-            view.setTag(speakItem);
-        } else {
-            view = convertView;
-//            speakItem = (SpeakItem) view.getTag();
+            return binding.getRoot();
         }
 
-        return view;
+        return convertView;
     }
 }

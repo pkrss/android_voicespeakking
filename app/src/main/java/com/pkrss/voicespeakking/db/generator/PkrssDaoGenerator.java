@@ -4,7 +4,6 @@
 //
 //import de.greenrobot.daogenerator.DaoGenerator;
 //import de.greenrobot.daogenerator.Entity;
-//import de.greenrobot.daogenerator.Property;
 //import de.greenrobot.daogenerator.Schema;
 //
 //public final class PkrssDaoGenerator {
@@ -23,9 +22,12 @@
 //        speakItem.addIdProperty().primaryKey();
 //        speakItem.addIntProperty("lastPos");
 //        speakItem.addStringProperty("brief");
-//        speakItem.addStringProperty("content");
 //        speakItem.addDateProperty("createTime");
 //        speakItem.addDateProperty("updateTime");
+//
+//        Entity speakItemContent = schema.addEntity("SpeakItemContent");
+//        speakItemContent.addIdProperty().primaryKey();
+//        speakItemContent.addStringProperty("content");
 //
 //        Entity remoteCacheData = schema.addEntity("RemoteCacheData");
 //        remoteCacheData.addIdProperty().primaryKey();

@@ -26,9 +26,8 @@ public class SpeakItemDao extends AbstractDao<SpeakItem, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property LastPos = new Property(1, Integer.class, "lastPos", false, "LAST_POS");
         public final static Property Brief = new Property(2, String.class, "brief", false, "BRIEF");
-        public final static Property Content = new Property(3, String.class, "content", false, "CONTENT");
-        public final static Property CreateTime = new Property(4, java.util.Date.class, "createTime", false, "CREATE_TIME");
-        public final static Property UpdateTime = new Property(5, java.util.Date.class, "updateTime", false, "UPDATE_TIME");
+        public final static Property CreateTime = new Property(3, java.util.Date.class, "createTime", false, "CREATE_TIME");
+        public final static Property UpdateTime = new Property(4, java.util.Date.class, "updateTime", false, "UPDATE_TIME");
     };
 
     private DaoSession daoSession;
@@ -50,9 +49,8 @@ public class SpeakItemDao extends AbstractDao<SpeakItem, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"LAST_POS\" INTEGER," + // 1: lastPos
                 "\"BRIEF\" TEXT," + // 2: brief
-                "\"CONTENT\" TEXT," + // 3: content
-                "\"CREATE_TIME\" INTEGER," + // 4: createTime
-                "\"UPDATE_TIME\" INTEGER);"); // 5: updateTime
+                "\"CREATE_TIME\" INTEGER," + // 3: createTime
+                "\"UPDATE_TIME\" INTEGER);"); // 4: updateTime
     }
 
     /** Drops the underlying database table. */
@@ -81,19 +79,14 @@ public class SpeakItemDao extends AbstractDao<SpeakItem, Long> {
             stmt.bindString(3, brief);
         }
  
-        String content = entity.getContent();
-        if (content != null) {
-            stmt.bindString(4, content);
-        }
- 
         java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
-            stmt.bindLong(5, createTime.getTime());
+            stmt.bindLong(4, createTime.getTime());
         }
  
         java.util.Date updateTime = entity.getUpdateTime();
         if (updateTime != null) {
-            stmt.bindLong(6, updateTime.getTime());
+            stmt.bindLong(5, updateTime.getTime());
         }
     }
 
@@ -116,9 +109,8 @@ public class SpeakItemDao extends AbstractDao<SpeakItem, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // lastPos
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // brief
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // content
-            cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)), // createTime
-            cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)) // updateTime
+            cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)), // createTime
+            cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)) // updateTime
         );
         return entity;
     }
@@ -129,9 +121,8 @@ public class SpeakItemDao extends AbstractDao<SpeakItem, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setLastPos(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
         entity.setBrief(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setContent(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setCreateTime(cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)));
-        entity.setUpdateTime(cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)));
+        entity.setCreateTime(cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)));
+        entity.setUpdateTime(cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)));
      }
     
     /** @inheritdoc */

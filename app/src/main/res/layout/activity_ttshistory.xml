@@ -25,14 +25,14 @@
         android:setOnRefreshListener="@{ttsHistoryHandler.onRefreshListener}"
         tools:context="com.pkrss.voicespeakking.activity.TTSHistoryActivity">
 
-
+<!--
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/loading"
             android:textSize="12sp"
             android:setHosterListener="@{ttsHistoryModel.loadMoreCtlHosterListener}"/>
-
+-->
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -1,17 +1,13 @@
 package com.pkrss.voicespeakking.handler;
 
-import android.animation.Animator;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.View;
-import android.widget.ListView;
 
 import com.pkrss.voicespeakking.db.dao.SpeakItemDao;
 import com.pkrss.voicespeakking.db.model.SpeakItem;
 import com.pkrss.voicespeakking.db.util.DbCore;
 import com.pkrss.voicespeakking.model.TTSHistoryModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class TTSHistoryHandler {
@@ -48,8 +44,8 @@ public final class TTSHistoryHandler {
         @Override
         public void run() {
 
-            if(ttsHistoryModel.getLoadMoreCtl()!=null)
-                ttsHistoryModel.getLoadMoreCtl().setVisibility(View.GONE);
+//            if(ttsHistoryModel.getLoadMoreCtl()!=null)
+//                ttsHistoryModel.getLoadMoreCtl().setVisibility(View.GONE);
 
             if(speakItemList==null)
                 return;
@@ -73,8 +69,8 @@ public final class TTSHistoryHandler {
         @Override
         public void onRefresh() {
             // show loading control
-            if(ttsHistoryModel.getLoadMoreCtl()!=null)
-                ttsHistoryModel.getLoadMoreCtl().setVisibility(View.VISIBLE);
+//            if(ttsHistoryModel.getLoadMoreCtl()!=null)
+//                ttsHistoryModel.getLoadMoreCtl().setVisibility(View.VISIBLE);
 
             if(ttsHistoryModel.getSwipeRefreshLayout()!=null)
                 ttsHistoryModel.getSwipeRefreshLayout().setRefreshing(true);
