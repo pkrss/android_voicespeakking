@@ -1,8 +1,8 @@
 package com.pkrss.module.tts.pkrss.dao;
 
 import com.pkrss.common.helper.WebHelper;
-import com.pkrss.voicespeakking.db.dao.RemoteCacheDataDao;
-import com.pkrss.voicespeakking.db.model.RemoteCacheData;
+import com.pkrss.voicespeakking.db.dao.RemoteCacheDataEntityDao;
+import com.pkrss.voicespeakking.db.entity.RemoteCacheDataEntity;
 import com.pkrss.voicespeakking.db.util.DbCore;
 
 import java.util.Calendar;
@@ -21,10 +21,10 @@ public final class RemoteCacheDao {
 	
 	private static void getRemoteOrCacheDataAsync(IRemoteCacheDataListener listener,String url,int days){
 
-		RemoteCacheData remoteCacheData = null;
+		RemoteCacheDataEntity remoteCacheData = null;
 
-		RemoteCacheDataDao remoteCacheDataDao = DbCore.getDaoSession().getRemoteCacheDataDao();
-		List<RemoteCacheData> remoteCacheDataList = remoteCacheDataDao.queryBuilder().where(RemoteCacheDataDao.Properties.Url.eq(url)).list();
+		RemoteCacheDataEntityDao remoteCacheDataDao = DbCore.getDaoSession().getRemoteCacheDataEntityDao();
+		List<RemoteCacheDataEntity> remoteCacheDataList = remoteCacheDataDao.queryBuilder().where(RemoteCacheDataEntityDao.Properties.Url.eq(url)).list();
 		if(remoteCacheDataList!=null && remoteCacheDataList.size()>0)
 			remoteCacheData = remoteCacheDataList.get(0);
 
@@ -50,10 +50,10 @@ public final class RemoteCacheDao {
 	
 	private static void getRemoteOrCacheData(IRemoteCacheDataListener listener,String url,int days){
 
-		RemoteCacheData remoteCacheData = null;
+		RemoteCacheDataEntity remoteCacheData = null;
 
-		RemoteCacheDataDao remoteCacheDataDao = DbCore.getDaoSession().getRemoteCacheDataDao();
-		List<RemoteCacheData> remoteCacheDataList = remoteCacheDataDao.queryBuilder().where(RemoteCacheDataDao.Properties.Url.eq(url)).list();
+		RemoteCacheDataEntityDao remoteCacheDataDao = DbCore.getDaoSession().getRemoteCacheDataEntityDao();
+		List<RemoteCacheDataEntity> remoteCacheDataList = remoteCacheDataDao.queryBuilder().where(RemoteCacheDataEntityDao.Properties.Url.eq(url)).list();
 		if(remoteCacheDataList!=null && remoteCacheDataList.size()>0)
 			remoteCacheData = remoteCacheDataList.get(0);
 
@@ -84,7 +84,7 @@ public final class RemoteCacheDao {
 			
 			if(ret!=null && ret.length()>0){
 				if(remoteCacheData == null){
-					remoteCacheData = new RemoteCacheData();
+					remoteCacheData = new RemoteCacheDataEntity();
 					remoteCacheData.setUrl(url);
 				}
 				remoteCacheData.setContent(ret);

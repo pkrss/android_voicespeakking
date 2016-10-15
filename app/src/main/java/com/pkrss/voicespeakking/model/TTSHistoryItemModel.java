@@ -2,22 +2,19 @@ package com.pkrss.voicespeakking.model;
 
 import android.app.Activity;
 import android.databinding.BaseObservable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.View;
-import android.widget.ListView;
 
-import com.pkrss.voicespeakking.db.model.SpeakItem;
+import com.pkrss.voicespeakking.db.entity.SpeakItemEntity;
 
 public final class TTSHistoryItemModel extends BaseObservable {
-    private SpeakItem speakItem;
+    private SpeakItemEntity speakItem;
     private Activity activity;
 
-    public TTSHistoryItemModel(Activity activity, SpeakItem speakItem){
+    public TTSHistoryItemModel(Activity activity, SpeakItemEntity speakItem){
         this.activity = activity;
         this.speakItem = speakItem;
     }
 
-    public SpeakItem getSpeakItem() {
+    public SpeakItemEntity getSpeakItem() {
         return speakItem;
     }
 

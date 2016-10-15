@@ -8,9 +8,8 @@ import android.widget.ListView;
 
 import com.pkrss.voicespeakking.adapter.TTSHistoryAdapter;
 import com.pkrss.voicespeakking.databinding.ViewAdapter;
-import com.pkrss.voicespeakking.db.model.SpeakItem;
+import com.pkrss.voicespeakking.db.entity.SpeakItemEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -85,7 +84,7 @@ public final class TTSHistoryModel extends BaseObservable {
         this.curPage = curPage;
     }
 
-    public void addAll(List<SpeakItem> items){
+    public void addAll(List<SpeakItemEntity> items){
         if(items==null || items.size()==0)
             return;
         ttsHistoryAdapter.addAll(items);

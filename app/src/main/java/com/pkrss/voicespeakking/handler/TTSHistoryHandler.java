@@ -3,8 +3,8 @@ package com.pkrss.voicespeakking.handler;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 
-import com.pkrss.voicespeakking.db.dao.SpeakItemDao;
-import com.pkrss.voicespeakking.db.model.SpeakItem;
+import com.pkrss.voicespeakking.db.dao.SpeakItemEntityDao;
+import com.pkrss.voicespeakking.db.entity.SpeakItemEntity;
 import com.pkrss.voicespeakking.db.util.DbCore;
 import com.pkrss.voicespeakking.model.TTSHistoryModel;
 
@@ -27,7 +27,7 @@ public final class TTSHistoryHandler {
             int pageIndex = ttsHistoryModel.getCurPage();
             ttsHistoryModel.setCurPage(pageIndex+1);
 
-            List<SpeakItem> speakItemList = DbCore.getDaoSession().getSpeakItemDao().queryBuilder().orderDesc(SpeakItemDao.Properties.UpdateTime).limit(TTSHistoryModel.pageSize).offset(pageIndex * TTSHistoryModel.pageSize).list();
+            List<SpeakItemEntity> speakItemList = DbCore.getDaoSession().getSpeakItemEntityDao().queryBuilder().orderDesc(SpeakItemEntityDao.Properties.UpdateTime).limit(TTSHistoryModel.pageSize).offset(pageIndex * TTSHistoryModel.pageSize).list();
             loadMoreResponseHandler.post(new MyLoadMoreResponseRunnable(speakItemList));
 
         }
@@ -35,9 +35,9 @@ public final class TTSHistoryHandler {
 
     private final class MyLoadMoreResponseRunnable implements Runnable{
 
-        List<SpeakItem> speakItemList;
+        List<SpeakItemEntity> speakItemList;
 
-        public MyLoadMoreResponseRunnable(List<SpeakItem> speakItemList){
+        public MyLoadMoreResponseRunnable(List<SpeakItemEntity> speakItemList){
             this.speakItemList = speakItemList;
         }
 

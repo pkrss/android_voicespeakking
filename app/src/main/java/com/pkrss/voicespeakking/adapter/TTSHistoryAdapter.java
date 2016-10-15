@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.pkrss.voicespeakking.R;
 import com.pkrss.voicespeakking.databinding.ChildTtshistoryItemBinding;
-import com.pkrss.voicespeakking.db.model.SpeakItem;
+import com.pkrss.voicespeakking.db.entity.SpeakItemEntity;
 import com.pkrss.voicespeakking.handler.TTSHistoryItemHandler;
 import com.pkrss.voicespeakking.model.TTSHistoryItemModel;
 
@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by liand on 2016/2/13.
  */
-public final class TTSHistoryAdapter extends ArrayAdapter<SpeakItem> {
+public final class TTSHistoryAdapter extends ArrayAdapter<SpeakItemEntity> {
 
     private final LayoutInflater mInflater;
     private Activity activity;
@@ -43,7 +43,7 @@ public final class TTSHistoryAdapter extends ArrayAdapter<SpeakItem> {
         if (convertView == null) {
             ChildTtshistoryItemBinding binding = DataBindingUtil.inflate(mInflater, R.layout.child_ttshistory_item, parent, false);
 
-            SpeakItem speakItem = getItem(position);
+            SpeakItemEntity speakItem = getItem(position);
             TTSHistoryItemModel ttsHistoryItemModel = new TTSHistoryItemModel(activity, speakItem);
             TTSHistoryItemHandler ttsHistoryItemHandler = new TTSHistoryItemHandler(ttsHistoryItemModel);
             binding.setTtsHistoryItemModel(ttsHistoryItemModel);

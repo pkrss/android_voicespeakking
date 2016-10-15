@@ -1,10 +1,10 @@
 package com.pkrss.voicespeakking.handler;
 
 import com.pkrss.voicespeakking.common.TTSConstants;
-import com.pkrss.voicespeakking.db.dao.SpeakItemContentDao;
-import com.pkrss.voicespeakking.db.dao.SpeakItemDao;
-import com.pkrss.voicespeakking.db.model.SpeakItem;
-import com.pkrss.voicespeakking.db.model.SpeakItemContent;
+import com.pkrss.voicespeakking.db.dao.SpeakItemContentEntityDao;
+import com.pkrss.voicespeakking.db.dao.SpeakItemEntityDao;
+import com.pkrss.voicespeakking.db.entity.SpeakItemContentEntity;
+import com.pkrss.voicespeakking.db.entity.SpeakItemEntity;
 import com.pkrss.voicespeakking.db.util.DbCore;
 
 import java.util.Date;
@@ -25,11 +25,11 @@ public final class ContentHandler {
         if(content == null || content.length()==0)
             return;
 
-        SpeakItemDao speakItemDao = DbCore.getDaoSession().getSpeakItemDao();
-        SpeakItemContent speakItemContent = DbCore.getDaoSession().getSpeakItemContentDao().queryBuilder().where(SpeakItemContentDao.Properties.Content.eq(content)).unique();
+        SpeakItemEntityDao speakItemDao = DbCore.getDaoSession().getSpeakItemEntityDao();
+        SpeakItemContentEntity speakItemContent = DbCore.getDaoSession().getSpeakItemContentEntityDao().queryBuilder().where(SpeakItemContentEntityDao.Properties.Content.eq(content)).unique();
         Date now = new Date();
         if(speakItemContent==null){
-            SpeakItem speakItem = new SpeakItem();
+            SpeakItemEntity speakItem = new SpeakItemEntity();
             speakItem.setLastPos(0);
             speakItem.setBrief(content.length()>TTSConstants.HISTORY_BIREF_LENGTH ? content.substring(0, TTSConstants.HISTORY_BIREF_LENGTH) : content);
 
@@ -37,15 +37,15 @@ public final class ContentHandler {
             speakItem.setUpdateTime(now);
 
 
-            speakItemContent = new SpeakItemContent();
+            speakItemContent = new SpeakItemContentEntity();
             speakItemContent.setId(speakItemDao.insert(speakItem));
 
             if(speakItemContent.getId()>0) {
                 speakItemContent.setContent(content);
-                DbCore.getDaoSession().getSpeakItemContentDao().insert(speakItemContent);
+                DbCore.getDaoSession().getSpeakItemContentEntityDao().insert(speakItemContent);
             }
         }else{
-            SpeakItem speakItem = DbCore.getDaoSession().getSpeakItemDao().load(speakItemContent.getId());
+            SpeakItemEntity speakItem = DbCore.getDaoSession().getSpeakItemEntityDao().load(speakItemContent.getId());
             if(speakItem!=null) {
                 speakItem.setUpdateTime(now);
                 speakItemDao.update(speakItem);

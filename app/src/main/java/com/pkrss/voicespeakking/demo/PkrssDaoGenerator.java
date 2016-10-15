@@ -1,10 +1,9 @@
-//package com.pkrss.voicespeakking.db.generator;
+//package com.pkrss.voicespeakking.demo;
 //
 //
-//
-//import de.greenrobot.daogenerator.DaoGenerator;
-//import de.greenrobot.daogenerator.Entity;
-//import de.greenrobot.daogenerator.Schema;
+//import org.greenrobot.daogenerator.DaoGenerator;
+//import org.greenrobot.daogenerator.Entity;
+//import org.greenrobot.daogenerator.Schema;
 //
 //public final class PkrssDaoGenerator {
 //    public static void main(String[] args) throws Exception {
@@ -22,12 +21,9 @@
 //        speakItem.addIdProperty().primaryKey();
 //        speakItem.addIntProperty("lastPos");
 //        speakItem.addStringProperty("brief");
+//        speakItem.addStringProperty("content");
 //        speakItem.addDateProperty("createTime");
 //        speakItem.addDateProperty("updateTime");
-//
-//        Entity speakItemContent = schema.addEntity("SpeakItemContent");
-//        speakItemContent.addIdProperty().primaryKey();
-//        speakItemContent.addStringProperty("content");
 //
 //        Entity remoteCacheData = schema.addEntity("RemoteCacheData");
 //        remoteCacheData.addIdProperty().primaryKey();
